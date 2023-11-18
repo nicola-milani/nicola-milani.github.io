@@ -1,0 +1,50 @@
+[
+    {
+        "role": "DevOps Engineer",
+        "company": "Infocert SpA",
+        "companyLogo": "img/logo_infocert.svg",
+        "companyWebSite": "https://www.infocert.it/",
+        "summary": "Mi sono occupato di implementare pipeline, migrazione da ambiente monolitico a microservizi\n DevOps Engineer",
+        "range": "Ottobre 2020 - Giugno 2021"
+    },
+    {
+        "role": "Sistemista e sviluppatore",
+        "company": "Libero professionista",
+        "companyLogo": "img/milo.svg",
+        "companyWebSite": "https://www.nicolamilani.it/",
+        "summary": "Manuntezione e sviluppo di soluzioni tecniche per le esigenze IT dei clienti",
+        "range": "Novembre 2017 - Presente"
+    },
+    {
+        "role": "Sistemista Linux",
+        "company": "ItServiceNet",
+        "companyLogo": "img/enterpriseve.png",
+        "companyWebSite": "https://www.itservicenet.net/",
+        "summary": "Supporto clienti e amministrazione di server Linux",
+        "range": "Gennaio 2018 - Giugno 2021"
+    },
+    {
+        "role": "DevOps Engineer",
+        "company": "G0E",
+        "companyLogo": "img/g0e.png",
+        "companyWebSite": "https://www.gizeroenergie.it/",
+        "summary": "Ho supportato la società nella migrazione all'approccio a microservizi e nell'implementazione di soluzioni basate su Docker",
+        "range": "Giugno 2020 - Giugno 2021"
+    },
+    {
+        "role": "Sistemista Linux",
+        "company": "Galileo",
+        "companyLogo": "img/galileo.png",
+        "companyWebSite": "https://csgalileo.org/",
+        "summary": "Manuntentore e gestore della soluzione Livenet per Università di Verona.\n Migrazione da overalyfs a ZFS",
+        "range": "Giugno 2019 - Giugno 2021"
+    },
+    {
+        "role": "Amministratore di sistema",
+        "company": "ITES Luigi Einaudi",
+        "companyLogo": "img/miur.png",
+        "companyWebSite": "https://www.einaudivr.edu.it//",
+        "summary": "Amministratore di sistema, gestore del parco macchine e dei server. Consulenza IT in ambito didattico.\n Gestione di Gsuite e Moodle.\n",
+        "range": "Novembre 2017 - Giugno 2021"
+    }
+]
