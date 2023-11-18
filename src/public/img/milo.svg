@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="198.799990pt"
+   height="242.840738pt"
+   viewBox="0 0 198.799990 242.840738"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg34"
+   sodipodi:docname="logo.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs38" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1850"
+     inkscape:window-height="1016"
+     id="namedview36"
+     showgrid="false"
+     inkscape:zoom="2.0615634"
+     inkscape:cx="141.69282"
+     inkscape:cy="135.39273"
+     inkscape:window-x="70"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g32" />
+  <metadata
+     id="metadata2">
+Created by potrace 1.12, written by Peter Selinger 2001-2015
+<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <g
+     transform="translate(-96.000000,290.379742) scale(0.100000,-0.100000)"
+     fill="#000000"
+     stroke="none"
+     id="g32">
+    <path
+       d="M1464 2902 c-59 -9 -77 -98 -29 -139 14 -13 35 -23 46 -23 24 0 61 18 71 35 5 9 51 -3 170 -45 l163 -58 7 -38 c7 -44 16 -30 -122 -176 -80 -85 -84 -88 -120 -82 -82 13 -129 -88 -66 -142 15 -13 37 -24 49 -24 20 0 28 -19 78 -166 39 -117 52 -167 44 -172 -17 -10 -35 -47 -35 -70 0 -28 35 -69 64 -74 53 -10 106 34 106 88 0 25 -56 74 -84 74 -14 0 -26 6 -26 13 0 6 -24 80 -53 163 l-53 151 23 27 c13 15 23 33 23 40 0 8 27 17 80 24 l79 11 30 -29 c31 -31 53 -36 94 -21 21 8 35 1 113 -65 88 -74 88 -74 85 -118 -2 -37 2 -47 25 -65 85 -67 188 52 105 121 l-28 25 28 189 c16 104 29 194 29 199 0 6 15 17 33 25 17 8 38 28 46 44 12 25 11 33 -3 62 -27 57 -107 61 -141 7 l-20 -32 -110 0 -110 0 -20 32 c-17 26 -27 33 -62 35 -32 2 -47 -2 -63 -18 l-20 -20 -159 56 c-156 56 -159 57 -165 89 -10 49 -49 76 -102 67z m828 -287 c6 -13 19 -27 30 -30 10 -4 18 -10 18 -14 0 -21 -61 -405 -65 -409 -14 -14 -41 26 -143 211 l-112 206 18 30 17 31 113 0 c110 0 113 -1 124 -25z m-290 -54 c4 -3 46 -78 93 -166 48 -88 98 -179 111 -202 14 -24 21 -43 17 -43 -5 0 -47 32 -93 70 -82 68 -85 72 -82 108 5 53 -27 92 -74 92 -47 0 -70 -14 -82 -48 -11 -31 -19 -34 -128 -48 -84 -10 -78 9 43 140 l107 116 40 -6 c23 -4 44 -9 48 -13z"
+       id="path4" />
+    <path
+       d="M977 1562 c-15 -17 -17 -59 -17 -400 l0 -382 23 -6 c13 -3 41 -4 63 -2 l39 3 5 200 c4 158 7 195 16 175 6 -14 37 -99 69 -189 32 -90 65 -169 73 -177 17 -17 73 -18 94 -1 8 6 43 91 77 187 34 96 65 182 69 190 4 8 9 -75 12 -185 l5 -200 48 -3 c27 -2 55 2 63 9 12 9 14 74 14 383 0 424 2 416 -74 416 -24 0 -48 -6 -53 -12 -6 -7 -51 -125 -102 -262 -51 -137 -95 -256 -100 -263 -5 -9 -44 82 -110 256 -58 150 -110 272 -118 275 -31 12 -80 6 -96 -12z"
+       id="path6" />
+    <path
+       d="M1802 1572 c-9 -7 -12 -94 -10 -403 l3 -394 60 0 60 0 3 394 c2 309 -1 396 -10 403 -7 4 -31 8 -53 8 -22 0 -46 -4 -53 -8z"
+       id="path8" />
+    <path
+       d="M2624 1562 c-23 -11 -50 -33 -61 -48 -40 -57 -45 -96 -41 -366 l3 -256 30 -43 c42 -59 84 -79 170 -79 89 0 138 26 172 89 22 43 23 51 23 314 0 253 -1 273 -21 313 -29 61 -74 86 -163 91 -55 3 -80 0 -112 -15z m145 -131 c29 -29 33 -67 29 -288 -3 -181 -5 -203 -22 -222 -28 -31 -79 -28 -105 5 -20 25 -21 39 -21 251 l0 224 25 24 c29 30 68 32 94 6z"
+       id="path10" />
+    <path
+       d="M2097 1563 c-4 -3 -7 -183 -7 -400 l0 -393 155 0 156 0 -3 63 -3 62 -87 3 -88 3 0 328 c0 291 -2 330 -16 335 -21 8 -99 8 -107 -1z"
+       id="path12" />
+  </g>
+</svg>

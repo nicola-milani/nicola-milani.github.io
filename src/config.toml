@@ -1,0 +1,60 @@
+title = "Milo Web"
+baseURL = ""
+theme = "hugo-resume"
+languageCode = "en-us"
+PygmentsCodeFences = false
+PygmentsCodeFencesGuessSyntax = true
+PygmentsStyle = "monokai"
+enableGitInfo = false
+canonifyURLs = true
+relativeURLs = true
+
+[params]
+address = "Verona, IT"
+email = "info@nicolamilani.it"
+favicon = "img/favicon.ico"
+firstName = "Nicola"
+lastName = "Milani"
+phone = "+393491637448"
+profileImage = "img/nicola.jpeg"
+showEducation = true
+showBlog = false
+showEmployExperience = true
+showFreelanceExperience = true
+showOtherActivity = true
+showOpenSource = false
+showProjects = false
+showPublications = false
+showQr = false
+showSkills = true
+
+[params.google]
+
+[params.google.analytics]
+trackerID = "XX-123446-01"
+
+[[params.handles]]
+link = "https://www.linkedin.com/in/nicola-milani-65287b57/"
+name = "LinkedIn"
+
+[[params.handles]]
+link = "https://github.com/nicola-milani"
+name = "GitHub"
+
+[[params.handles]]
+link = "https://gitlab.com/nicola-milani"
+name = "GitLab"
+
+[[params.handles]]
+link = "https://stackoverflow.com/users/5006091/nicola-milani"
+name = "Stack-Overflow"
+
+[[params.handles]]
+link = "https://medium.com/@nicoweb313"
+name = "Medium"
+
+[outputs]
+home = ["HTML", "JSON"]
+
+[taxonomies]
+tag = "tags"

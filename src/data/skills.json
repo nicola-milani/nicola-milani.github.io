@@ -1,0 +1,31 @@
+[
+  {
+      "grouping":"Architetture",
+      "skills":[ "IP Networking","DNS","Firewalls","Load Balancing","Microservices","RESTful APIs","SaaS/PaaS/IaaS","AWS"]
+  },{
+      "grouping":"Linguaggi, Sistemi operativi e strutmenti",
+      "skills":[ "Java","Python","git","linux","bash","Windows","NGINX","GO"]
+  },
+  {
+      "grouping":"Platform Development & Administration",
+      "skills":[ "Jira","Trello","Bitbucket","NGINX"]
+  },
+  {
+      "grouping":"Data Management",
+      "skills":[
+        {"name":"Microsoft SQL Server","icon":"msql_server"},
+        {"name":"Oracle","icon":"database"},
+        "MongoDB",
+        {"name":"Apache Spark"}
+      ]
+  },
+  {
+    "grouping":"Containers & Cloud",
+      "skills":[
+          {"name":"Docker","link":"https://docker.com"},
+          {"name":"AWS","link":"https://aws.amazon.com"},
+          {"name":"Google Cloud","link":"https://cloud.google.com"},
+          {"name":"Kubernetes","link":"https://kubernetes.io"}
+      ]
+  }
+]
