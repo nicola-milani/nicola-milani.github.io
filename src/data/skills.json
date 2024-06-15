@@ -13,11 +13,12 @@
   {
       "grouping":"Data Management",
       "skills":[
-        {"name":"Microsoft SQL Server","icon":"msql_server"},
-        {"name":"Oracle","icon":"database"},
-        {"name":"MongoDB","icon":"mongodb"},
+        {"name":"DynamoDB","icon":"dynamodb"},
+        {"name":"MySql","icon":"mysql"},
+        {"name":"Postgresql","icon":"postgresql"},
+        {"name":"MongoDB","icon":"mongodb-plain"},
         {"name":"ForgeRock DS","icon":"ldap"},
-        {"name":"Apache Spark"}
+        {"name":"Cassandra","icon":"cassandra"}
       ]
   },
   {
