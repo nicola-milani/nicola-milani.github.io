@@ -1,5 +1,11 @@
 [
 	{
+		"name": "ForgeRock Directory Services Product Knowledge",
+		"description":"Started certification for ForgeRock Directory Service",
+		"badge":"https://images.credly.com/size/680x680/images/5545cafe-5c89-49cf-996a-52aa76eded32/DS-100.png",
+		"proof":"https://www.credly.com/badges/b00f839a-5c66-412d-a054-89f45870d078/linked_in?t=s9gp91"
+	},
+	{
 		"name":"AWS Cloud Practitioner",
 		"description": "AWS Cloud Practitioner",
 		"badge":"https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png",
@@ -17,7 +23,6 @@
 		"name":"EUCIP",
 		"description": "IT Administrator Fundamentals",
 		"badge":"https://upload.wikimedia.org/wikipedia/commons/c/ca/EUCIP.jpg",
-		"proof":"https://www.credential.net/c8254bd7-45dd-4dc3-9049-3cb3c26bcff9#gs.9aldc0"
-		
+		"proof":""
 	}
 ]
