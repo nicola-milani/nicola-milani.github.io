@@ -15,7 +15,6 @@ email = "info@nicolamilani.it"
 favicon = "img/favicon.ico"
 firstName = "Nicola"
 lastName = "Milani"
-phone = "+393491637448"
 profileImage = "img/nicola.jpeg"
 showEducation = true
 showBlog = false
@@ -31,7 +30,7 @@ showSkills = true
 [params.google]
 
 [params.google.analytics]
-trackerID = "XX-123446-01"
+trackerID = "G-58BVEVN206"
 
 [[params.handles]]
 link = "https://www.linkedin.com/in/nicola-milani-65287b57/"
