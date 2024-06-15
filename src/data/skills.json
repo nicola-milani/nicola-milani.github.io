@@ -15,7 +15,8 @@
       "skills":[
         {"name":"Microsoft SQL Server","icon":"msql_server"},
         {"name":"Oracle","icon":"database"},
-        "MongoDB",
+        {"name":"MongoDB","icon":"mongodb"},
+        {"name":"ForgeRock DS","icon":"ldap"},
         {"name":"Apache Spark"}
       ]
   },
