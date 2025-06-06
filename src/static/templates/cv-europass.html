@@ -1,13 +1,19 @@
+<!-- Wrapper principale del CV Europass -->
 <div id="cv-europass-wrapper" style="font-family: Arial, sans-serif; margin: auto; max-width: 900px; background: #fff; box-sizing: border-box; padding: 0 24px;">
+  <!-- Header: logo Europass e dati anagrafici -->
   <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5em; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <!-- Logo Europass in alto a destra -->
     <div style="align-self: flex-end; width: 100%; display: flex; justify-content: flex-end;">
       <img src="https://europass.europa.eu/sites/default/files/inline-images/Europass-Full-Colour-Brand-Mark.png" alt="Logo Europass" style="height: 60px; margin-top: 10px; margin-bottom: 10px; max-width: 180px; width: auto;" />
     </div>
+    <!-- Blocco dati anagrafici e foto -->
     <div style="display: flex; flex-direction: row; align-items: center; background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; width: 100%; max-width: 900px; box-sizing: border-box;">
       {{#with (lookup data 0)}}
+        <!-- Foto profilo se presente -->
         {{#if photoBase64}}
           <img src="{{photoBase64}}" alt="Foto" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 2px solid #0074d9; margin-right: 24px; background: #fff;" />
         {{/if}}
+        <!-- Tabella dati anagrafici -->
         <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
           <table style="width:100%;">
             {{#each fields}}
@@ -21,10 +27,14 @@
       {{/with}}
     </div>
   </div>
+  <!-- Titolo principale -->
   <h1 style="text-align:center; font-size:2em;">Curriculum Vitae - Europass</h1>
+  <!-- Sezioni successive del CV (esperienze, istruzione, ecc.) -->
   {{#each data}}
     {{#unless @first}}
+      <!-- Titolo sezione -->
       <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:1.5em;'>{{section}}</h2>
+      <!-- Campi tabellari della sezione -->
       {{#if fields}}
         <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
           <table style="width:100%;">
@@ -34,6 +44,7 @@
           </table>
         </div>
       {{/if}}
+      <!-- Lista di item (es. esperienze, corsi, ecc.) -->
       {{#if items}}
         <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
           {{#each items}}
@@ -48,4 +59,8 @@
       {{/if}}
     {{/unless}}
   {{/each}}
+  <!-- Firma con data di generazione, visibile solo se passata dal contesto -->
+  {{#if signature}}
+    <div style="margin-top: 32px; text-align: right; font-size: 0.95em; color: #555;">{{signature}}</div>
+  {{/if}}
 </div>
