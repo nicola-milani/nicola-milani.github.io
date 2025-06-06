@@ -1,10 +1,22 @@
 <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="downloadResume">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <div class="my-auto" id="experience-content">
     <h2 class="mb-5">Genera CV aggiornato</h2>
-      <button id="generate-pd-europassf">Genera CV europass</button>
-      <button id="generate-pdf">Genera CV </button>
-  <script src="../js/pdf-generator.js"></script>
+    <div class="dropdown mb-3">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="previewDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        Scegli stile preview
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="previewDropdown">
+        <li><a class="dropdown-item" href="#" id="show-europass-preview">Stile Europass</a></li>
+        <li><a class="dropdown-item" href="#" id="show-custom-preview">Stile Personalizzato</a></li>
+      </ul>
+    </div>
+    <button id="generate-pdf" class="btn btn-success">Genera PDF dalla preview</button>
+    <!--<button id="generate-pdf-simple">Genera PDF semplice</button>-->
   </div>
-
+  <div id="cv-preview"></div>
+  <!-- Carica pdf-generator.js con percorso assoluto e DOPO tutte le dipendenze -->
+  <script src="/js/pdf-generator.js"></script>
 </section>

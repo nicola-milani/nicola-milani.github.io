@@ -1,0 +1,51 @@
+<div id="cv-europass-wrapper" style="font-family: Arial, sans-serif; margin: auto; max-width: 900px; background: #fff; box-sizing: border-box; padding: 0 24px;">
+  <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5em; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="align-self: flex-end; width: 100%; display: flex; justify-content: flex-end;">
+      <img src="https://europass.europa.eu/sites/default/files/inline-images/Europass-Full-Colour-Brand-Mark.png" alt="Logo Europass" style="height: 60px; margin-top: 10px; margin-bottom: 10px; max-width: 180px; width: auto;" />
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; width: 100%; max-width: 900px; box-sizing: border-box;">
+      {{#with (lookup data 0)}}
+        {{#if photoBase64}}
+          <img src="{{photoBase64}}" alt="Foto" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 2px solid #0074d9; margin-right: 24px; background: #fff;" />
+        {{/if}}
+        <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+          <table style="width:100%;">
+            {{#each fields}}
+              <tr>
+                <td style="font-weight:bold; color:#0074d9; padding-right: 8px; text-align:right; white-space:nowrap;">{{label}}:</td>
+                <td style="color:#222;">{{value}}</td>
+              </tr>
+            {{/each}}
+          </table>
+        </div>
+      {{/with}}
+    </div>
+  </div>
+  <h1 style="text-align:center; font-size:2em;">Curriculum Vitae - Europass</h1>
+  {{#each data}}
+    {{#unless @first}}
+      <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:1.5em;'>{{section}}</h2>
+      {{#if fields}}
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
+          <table style="width:100%;">
+            {{#each fields}}
+              <tr><td style='width:35%; font-weight:bold; vertical-align:top; color:#0074d9; text-align:right; padding-right:8px; white-space:nowrap;'>{{label}}:</td><td style="color:#222;">{{value}}</td></tr>
+            {{/each}}
+          </table>
+        </div>
+      {{/if}}
+      {{#if items}}
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
+          {{#each items}}
+            <div style="margin-bottom:0.5em;">
+              {{#if period}}<span style='font-weight:bold;'>{{period}}</span> {{/if}}
+              {{#if role}}{{role}} - {{company}}<br/>{{/if}}
+              {{#if title}}{{title}} - {{institute}}</span><br/>{{/if}}
+              {{#if description}}<span>{{description}}</span>{{/if}}
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    {{/unless}}
+  {{/each}}
+</div>

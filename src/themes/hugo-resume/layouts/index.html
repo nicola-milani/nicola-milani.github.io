@@ -30,9 +30,6 @@
    {{ if .Site.Params.showOtherActivity }}
        {{ partial "portfolio/activity.html" . }}
    {{ end }}
-   {{ if .Site.Params.showDownloadResume }}
-       {{ partial "portfolio/downloadResume.html" . }}
-   {{ end }}
    {{ if .Site.Params.showEducation }}
        {{ partial "portfolio/education.html" . }}
    {{ end }}
@@ -41,6 +38,9 @@
          {{ .Scratch.Set "sectionId" "blog" }}
          {{ partial "sectionSummary" . }}
       {{ end }}
+   {{ end }}
+   {{ if .Site.Params.showDownloadResume }}
+       {{ partial "portfolio/downloadResume.html" . }}
    {{ end }}
 
 {{ end }}
