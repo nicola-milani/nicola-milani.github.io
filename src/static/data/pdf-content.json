@@ -1,0 +1,51 @@
+[
+  {
+    "section": "Informazioni Personali",
+    "fields": [
+      { "label": "Nome", "value": "Mario Rossi" },
+      { "label": "Indirizzo", "value": "Via Roma 1, 00100 Roma" },
+      { "label": "Telefono", "value": "+39 333 1234567" },
+      { "label": "Email", "value": "mario.rossi@email.com" },
+      { "label": "Nazionalità", "value": "Italiana" },
+      { "label": "Data di nascita", "value": "01/01/1980" }
+    ]
+  },
+  {
+    "section": "Esperienza Lavorativa",
+    "items": [
+      {
+        "period": "2020 - Presente",
+        "role": "Sviluppatore Senior",
+        "company": "Azienda S.p.A.",
+        "description": "Sviluppo di applicazioni web e gestione del team di sviluppo."
+      },
+      {
+        "period": "2015 - 2020",
+        "role": "Sviluppatore",
+        "company": "Tech SRL",
+        "description": "Progettazione e realizzazione di soluzioni software custom."
+      }
+    ]
+  },
+  {
+    "section": "Istruzione e Formazione",
+    "items": [
+      {
+        "period": "2004 - 2008",
+        "title": "Laurea in Informatica",
+        "institute": "Università di Roma",
+        "description": "Votazione: 110/110 e lode"
+      }
+    ]
+  },
+  {
+    "section": "Competenze Personali",
+    "fields": [
+      { "label": "Lingua madre", "value": "Italiano" },
+      { "label": "Altre lingue", "value": "Inglese (B2), Francese (A2)" },
+      { "label": "Competenze comunicative", "value": "Ottime capacità relazionali e di lavoro in team." },
+      { "label": "Competenze organizzative", "value": "Esperienza nella gestione di progetti e risorse." },
+      { "label": "Competenze digitali", "value": "Ottima conoscenza di JavaScript, Python, Git, Linux." }
+    ]
+  }
+]

@@ -26,6 +26,7 @@ showProjects = false
 showPublications = false
 showQr = false
 showSkills = true
+showDownloadResume = true
 
 [params.google]
 

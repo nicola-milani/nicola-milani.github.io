@@ -30,6 +30,9 @@
    {{ if .Site.Params.showOtherActivity }}
        {{ partial "portfolio/activity.html" . }}
    {{ end }}
+   {{ if .Site.Params.showDownloadResume }}
+       {{ partial "portfolio/downloadResume.html" . }}
+   {{ end }}
    {{ if .Site.Params.showEducation }}
        {{ partial "portfolio/education.html" . }}
    {{ end }}
@@ -39,4 +42,5 @@
          {{ partial "sectionSummary" . }}
       {{ end }}
    {{ end }}
+
 {{ end }}

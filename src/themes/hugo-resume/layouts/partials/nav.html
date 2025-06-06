@@ -48,11 +48,17 @@
             <a class="nav-link js-scroll-trigger" href="/#activity">Altre attività</a>
           </li>
       {{ end }}
+      {{ if .Site.Params.showDownloadResume }}
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/#downloadResume">Genera PDF</a>
+        </li>
+      {{ end }}
       {{ if .Site.Params.showBlog }}
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/#blog">Blog</a>
           </li>
       {{ end }}
+
     </ul>
   </div>
 </nav>
