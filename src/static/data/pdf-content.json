@@ -2,8 +2,15 @@
   {
     "section": "Informazioni Personali",
     "fields": [
-      { "label": "Nome", "value": "Nicola Milani" },
-      { "label": "Email", "value": "aW5mb0BuaWNvbGFtaWxhbmkuaXQ=", "base64": true }
+      {
+        "label": "Nome",
+        "value": "Nicola Milani"
+      },
+      {
+        "label": "Email",
+        "value": "aW5mb0BuaWNvbGFtaWxhbmkuaXQ=",
+        "base64": true
+      }
     ],
     "photoBase64": "data:image/jpeg;base64,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"
   },
@@ -11,18 +18,116 @@
     "section": "Esperienza Lavorativa",
     "items": [
       {
-        "period": "2020 - Presente",
-        "role": "Sviluppatore Senior",
-        "company": "Azienda S.p.A.",
-        "description": "Sviluppo di applicazioni web e gestione del team di sviluppo.",
-        "contratto": "Dipendente"
+        "period": "2021 - Presente",
+        "role": "DevOps Engineer, Cloud Architect, Service Owner and Product Owner",
+        "company": "Tinexta Infocert S.p.A.",
+        "description": "Mi occupo di <strong>risolvere support request di terzo livello</strong> del team di Platform Enginnering, in particolare seguo le evoluzioni e il mantenimento di tutti i componenti di <strong>identity management</strong> e di <strong>access management</strong>, compreso il servizio dell'<strong>IDP SPID</strong> del quale ho curato la migrazione su architettura cloud native su kubernetes. <br></br> Gestione degli <strong>incident</strong> del team e dei rilasci applicativi, supporto all'area compliance in sede di audit e gestione della documentazione tecnica tramite Confluence e mkdocs. Supporto l'inserimento di personale nel team e la formazione del personale junior. <br></br>Come <strong>Product Owner</strong> mi occupo della gestione del backlog e della pianificazione delle attività, organizzo le cerimonie SCRUM di inizio e fine sprint. <br><br> Ho contribuito alla <strong>definizione delle architetture cloud native e alla migrazione di servizi legacy su piattaforme moderne in cloud</strong>. Lavoro quotidianamente con Jira, Confluence, Gitlab, Docker, Kubernetes, Helm, Terraform, Ansible, AWS e le sue risorse, Mongo Atlas, LDAP Forgerock, Jenkins, GitlabCI, Prometheus, Loki, Grafana e Python",
+        "contract": "Dipendente",
+        "companyWebSite": "https://www.infocert.it",
+        "companyLogoBase64": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJMaXZlbGxvXzEiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExNTMuMiA2MDAiPjxkZWZzPjxzdHlsZT4uc3Qwe2ZpbGw6IzAwNzJjZX08L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNC43IDU5Ny4zaDM0LjRWNDE3LjdsLTM0LjQgNnpNMCAzOTUuMWw0MS4xLTd2LTM4LjJsLTQxLjEgN3pNMTc4LjggNDE2LjJjLTIxIDAtNDEuOSA5LjMtNTYuNCAyNC41di0yM2wtMzMuNyA2LjF2MTczLjZoMzQuNHYtODcuN2MwLTQxLjggMjQuNy02MC44IDQ3LjYtNjAuOHMzNy40IDEwLjQgMzcuNCA0NC41djEwMy45aDM0LjdWNDg2LjJjMC00Ny44LTIwLjMtNzAuMS02NC03MC4xWk0zNDEuOSAzNzQuOWMxLjIgMCAyLjYgMCAzLjguMmw0LjEuOCA5LjQtMzAuNC00LjQtMS40Yy01LjYtMS43LTExLjEtMi42LTE3LTIuNi0zMC45IDAtNTIuNCAyNS4zLTUyLjQgNjEuNnYxOTQuMWgzNC4zTDMyMCA0NjhsMzctNi44VjQyOGwtMzcgNi44LS4zLTMxLjhjLS4yLTEwLjcgMS45LTE4LjQgNi4zLTIyLjggMy41LTMuNiA4LjctNS4zIDE1LjgtNS4zWk00NjIuMiA0MTYuMmMtNTMuOSAwLTg3LjMgMzUuMy04Ny4zIDkyLjFzMzMuMiA5MS40IDg2LjcgOTEuNCA4OC40LTM1LjMgODguNC05Mi4xLTMzLjYtOTEuNC04Ny43LTkxLjRabS01MS42IDkxLjdjMC0yNyA4LjktNTkuMSA1MS4zLTU5LjFzNTIuMyAyMi42IDUyLjMgNTkuMS0yMC4zIDU5LjEtNTMgNTkuMS01MC42LTMyLjEtNTAuNi01OS4xTTcxMC4yIDU1Ny41Yy0xNS40IDYuNC0zMS4yIDkuOC00NS43IDkuOC0zNy4yIDAtNTUuNC0xOS4zLTU1LjQtNTkuMXMxNy43LTYxLjEgNTEuMy02MS4xIDMyLjkgMy4zIDQ5LjUgOS44bDQuNyAxLjkgOS4xLTMxLjItNC4yLTEuNGMtMjAuNC02LjktMzkuNy0xMC40LTU3LjQtMTAuNC01Ni40IDAtODguNyAzMy44LTg4LjcgOTIuOHMzMi41IDkxLjQgODkgOTEuNCAzNy0zLjUgNTcuNC0xMC40bDQuMS0xLjQtOS0zMi43LTQuOSAyWk04MzIgNDE2LjJjLTQyLjUgMC04NS4zIDI3LjktODUuMyA5MC40czMzLjcgOTMuMSA5MC4xIDkzLjEgMzctMy41IDU3LjQtMTAuNGw0LjEtMS40LTktMzIuNy00LjkgMmMtMTUuNCA2LjQtMzEuMiA5LjgtNDUuNyA5LjgtMjguOCAwLTQ4LjEtMTMuMy01My42LTM2LjhsMTI1LjYtMjUuM3YtMy44YzAtNTEuNi0zMS04NS03OC45LTg1Wk03OTYuOSA0NjFjOC41LTguNiAyMC41LTEzLjIgMzQuNy0xMy4yIDI0LjMgMCAzOSAxMSA0My44IDMyLjdsLTkyLjkgMTguM2MuOC0xNi4zIDUuNi0yOSAxNC40LTM3LjlaTTExNDcuNSA1NjQuNGwtNC40LjZjLTIgLjMtNC41LjMtNy4xLjMtMjAuOCAwLTI4LjktNy41LTI4LjktMjYuOXYtNzkuMmw0NS40LTguMXYtMzMuNWwtNDUuNCA4LjF2LTU1LjZsLTM0LjQgNnYxNjIuMmMwIDEzLjggNCA1OC44IDU2LjEgNTkuNSA4LjEgMCAxNC44LS44IDIwLjQtMi42bDMuOS0xLjItNS43LTI5LjhaTTk4MCA0NDQuNnYtMjdsLTM0LjQgNnYxNzMuNkg5ODB2LTkyLjhjMC0yNi42IDE4LjEtMzkuNiA2Mi4zLTQ0LjlsNC4xLS41di0zNi4ybC01LjUgMS4xYy0yMy42IDQuNS00NC4xIDExLjQtNjAuOSAyMC42Wk04NDQuMyAxMi4ybC03OC43IDEzLjktMzkuNyA1Ny41LTM1LjgtNDQuMi02MC40IDEwLjcgNjQuNCA3OS41LTY4LjYgOTloNjkuMWwzNi43LTUzIDQzIDUzaDY5LjFsLTgwLjMtOTl6TTE0My41IDIyOC42aDU4LjhWMzcuMWwtNTguOCAxMC40ek0zNTUuNCAzNC43Yy0yMy41IDAtNDYuOSAxMi01Ny40IDI5LjJWMzcuMmwtNTguOCAxMC40djE4MS4ySDI5OHYtOTQuMWMwLTMzLjMgMTMuNy00OC43IDMzLjMtNDguN3MyOCAxNC40IDI4IDQ2LjJ2OTYuNWg1OC44VjEwOC40YzAtNTEuMS0yMy4xLTczLjYtNjIuNy03My42Wk0xMTQ5LjYgMjAwLjZWOTguNGMwLTQ1LjUtMjkuMS02My40LTc2LjMtNjMuNHMtMjMuNSAxLjgtMzcuOSA0LjNsLTQxLjIgNy4zdjQ1LjFsMzguOS02LjhjMTEuOS0yIDIyLjEtMy42IDMxLjUtMy42IDE1LjggMCAyNi4zIDQuNiAyNi4zIDE4Ljl2NS45bC02MC42IDEwLjdjLTQxLjMgNy01Ny44IDI5LjktNTcuOCA1Ni45IDAgNDEgMzAuMSA1Ny40IDYwLjIgNTcuNHM0OC4zLTcuNyA1OC4xLTIwbDIuNSAxNy41aDU5LjVjLTIuMS0xMC45LTMuMi0xOS4zLTMuMi0yOG0tNTguOS00OS4zYzAgMjUuOS0yMi4xIDM5LjItNDIuNyAzOS4ycy0yMS43LTYuNy0yMS43LTE4LjYgNC43LTE3LjUgMjYuOC0yMS40bDM3LjctNi42djcuNFoiIGNsYXNzPSJzdDAiPjwvcGF0aD48cGF0aCBkPSJNNTk4LjcgNTMuOWMtMTMuNi0xMS40LTMyLjUtMTkuMi01OC45LTE5LjJzLTU2IDktNzQuNCAyOC45Yy0xNSAxNi4yLTI0LjMgMzkuNS0yNC4zIDcwLjkgMCA2MiAzMS41IDk2LjYgOTkuMSA5Ni42czUzLjktNS45IDcwLjctMTIuNkw1OTkuNyAxNzRjLTE3LjUgNy43LTQyIDExLjUtNTYgMTEuNXMtMzguMy04LjUtNDEuOC0yNWwxMzEuMi0yMy4xczEuMS01My44LTM0LjQtODMuNU00OTkuNiAxMjNjMC0zMC44IDE3LjItNDQuNiA0MC42LTQ0LjZzMzEuMSAxMS44IDM0LjYgMzEuM3pNNjguMiAwIDkuNCAxMC40djE1MC43YzAgNTMuOSAyOC40IDcwLjQgNjQuOCA3MCAxMS45IDAgMjQuMi0yLjEgMzYuOC01LjJsLTguNC00NS41Yy02IDIuMS0xMS45IDIuOC0xNi41IDIuOC0xMS4yLS40LTE3LjktNy0xNy45LTIxLjd2LTU1LjZsNDQuMS03LjhWNTNsLTQ0LjEgNy44ek05MTMuNiAwbC01OC44IDEwLjR2MTUwLjdjMCA1My45IDI4LjQgNzAuNCA2NC44IDcwIDExLjkgMCAyNC4yLTIuMSAzNi44LTUuMmwtOC40LTQ1LjVjLTYgMi4xLTExLjkgMi44LTE2LjUgMi44LTExLjItLjQtMTcuOS03LTE3LjktMjEuN3YtNTUuNmw0NC4xLTcuOFY1M2wtNDQuMSA3Ljh6IiBjbGFzcz0ic3QwIj48L3BhdGg+PC9zdmc+"
       },
       {
-        "period": "2015 - 2020",
-        "role": "Sviluppatore",
-        "company": "Tech SRL",
-        "description": "Progettazione e realizzazione di soluzioni software custom.",
-        "contratto": "Partita IVA"
+        "role": "Sistemista e sviluppatore",
+        "company": "Libero professionista",
+        "contract": "Partita IVA",
+        "companyLogoBase64": "img/milo.svg",
+        "companyWebSite": "https://www.nicolamilani.it/",
+        "description": "Ho operato a partita iva presso diversi clienti, occupandomi di sistemistica e sviluppo software. Ho lavorato con tecnologie come Docker, Kubernetes, Python, Ansible, Terraform e AWS. Ho gestito progetti di migrazione su cloud e implementazione di architetture a microservizi.",
+        "period": "Novembre 2017 - 2022"
+      },
+      {
+        "role": "Junior Java Developer",
+        "company": "Lab4IT",
+        "contract": "Dipendente",
+        "companyLogoBase64": "",
+        "companyWebSite": "https://www.lab4it.com",
+        "description": "Come sviluppatore JAVA ho implementato alcune modifiche al codice dei gestioni distribuiti dall'azienda.",
+        "period": "2016 - 2017"
+      }]},
+      {
+        "section": "Progetti rilevanti come professionista Freeelance",
+        "items":
+      [
+      {
+        "role": "Sistemista e DevOps Engineer",
+        "company": "Makarenalabs",
+        "contract": "Partita IVA",
+        "companyLogoBase64": "http://www.makarenalabs.com/wp-content/uploads/2019/01/logo2.png",
+        "companyWebSite": "https://www.makarenalabs.com/",
+        "description": "Definizione di uno stack di deploy serverless per applicazione web e base dati su Amazon Keyspsaces (Cassandra as a Service)",
+        "period": "2020"
+      },
+      {
+        "role": "Sistemista Linux",
+        "company": "ItServiceNet",
+        "companyLogoBase64": "img/enterpriseve.png",
+        "companyWebSite": "https://www.itservicenet.net/",
+        "description": "Ho imparato moltissimo da questa collaborazione conclusasi con l'assuzione in Infocert. Ho gestito server Linux, configurato reti e implementato soluzioni di virtualizzazione con Proxmox. Ho lavorato su progetti di migrazione e gestione di infrastrutture IT più o meno complesse. ",
+        "period": "Gennaio 2018 - Giugno 2021"
+      },
+      {
+        "role": "DevOps Engineer",
+        "company": "Gizero",
+        "companyLogoBase64": "img/g0e.png",
+        "companyWebSite": "https://www.gizeroenergie.it/",
+        "description": "Una breve collaborazione che ha supportato la società nella migrazione all'approccio a microservizi e nell'implementazione di soluzioni basate su Docker e Google Cloud Platform",
+        "period": "Giugno 2020 - Giugno 2021"
+      },
+      {
+        "role": "Sistemista Linux",
+        "company": "Copperativa Sociale Galileo",
+        "companyLogoBase64": "img/galileo.png",
+        "companyWebSite": "https://csgalileo.org/",
+        "description": "Manuntentore e gestore della soluzione Livenet per Università di Verona.\n Migrazione da overalyfs a ZFS. La soluzione Livenet fu ideata dalla cooperativa Galileo per gestire il parco macchine dell'università. Inizialmente basata su overlayfs, è stata poi migrata a ZFS per migliorare le performance e la gestione dei dati. <br><br> Gestione di server Linux e consulenza IT in ambito didattico.\n",
+        "period": "Giugno 2019 - Giugno 2021"
+      },
+      {
+        "role": "Amministratore di sistema",
+        "company": "ITES Luigi Einaudi",
+        "companyLogoBase64": "img/miur.png",
+        "companyWebSite": "https://www.einaudivr.edu.it//",
+        "description": "Amministratore di sistema, gestore del parco macchine e dei server. Consulenza IT in ambito didattico.\n Gestione di Gsuite e Moodle.\n",
+        "period": "Novembre 2017 - Giugno 2021"
+      }
+    ]
+  },
+  {
+    "section": "Esperienza come docente",
+    "items": [
+      {
+        "arguments": "Formazione su docker e containerizzazione",
+        "school": "Last Academy",
+        "companyLogoBase64": "data:image/png;base64,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",
+        "description": "Ho tenuto corsi di formazione su Docker e containerizzazione per studenti e professionisti, fornendo le competenze necessarie per comprendere e utilizzare le tecnologie di containerizzazione in ambito DevOps.",
+        "period": "2024"
+      },
+      {
+        "arguments": "Formazione sistemistica Linux, Windows e Netoworking",
+        "school": "ManPower per Accenture",
+        "companyLogoBase64": "data:image/jpeg;base64,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",
+        "description": "Tramite manpower ho collaborato con Accenture per la formazione di giovani talenti in ambito sistemistico. Ho tenuto corsi su Linux, Windows e Networking, fornendo le competenze necessarie per entrare nel mondo del lavoro.",
+        "period": "2018"
+      }
+    ]
+  },
+  {
+    "section": "Progetti personali",
+    "items": [
+      {
+        "title": "Randomidi",
+        "description": "Sistema di generazione di file midi da usare per basi musicali facendo uso di algoritmi di machine learning. Il sistema è stato sviluppato in python e utilizza le librerie Tensorflow e Keras per l'addestramento del modello."
+      },
+      {
+        "title": "Hotcoin",
+        "description": "Progetto python per la determinazione dei migliori acquisti e vendite di criptovalute. Il sistema è stato sviluppato definendo un algoritmo di machine learning che analizza i dati storici delle criptovalute e fornisce raccomandazioni per gli investimenti."
+      },
+      {
+        "title": "Hotmaps",
+        "description": "Progetto python per la generazione di mappe calde finalizzate alla comprensione dei luoghi migliori per acquisto/affitto appartamenti. Il sistema è stato sviluppato tenendo conto dei punti di interesse"
+      },
+      {
+        "title": "Slimbox - startup",
+        "description": "Progettazione di un sistema in cloud per la gestione del parco macchine aziendale, scolastico e univesitario. Il business model è arrivato in finale alla competizione Startup di Università di Maastricht nel 2016."
       }
     ]
   },
@@ -30,21 +135,40 @@
     "section": "Istruzione e Formazione",
     "items": [
       {
-        "period": "2004 - 2008",
-        "title": "Laurea in Informatica",
-        "institute": "Università di Roma",
-        "description": "Votazione: 110/110 e lode"
+        "period": "2011",
+        "title": "Diploma di Ragioniere Perito Programmatore ",
+        "institute": "Istituto Tecnico Commerciale Aldo Pasoli (VR)"
       }
     ]
   },
   {
     "section": "Competenze Personali",
     "fields": [
-      { "label": "Lingua madre", "value": "SXRhbGlhbm8=", "base64": true },
-      { "label": "Altre lingue", "value": "SW5nbGVzZSAoQjIpLCBGcmFuY2VzZSAoQTIp", "base64": true },
-      { "label": "Competenze comunicative", "value": "T3R0aW1lIGNhcGFjaXTDqSByZWxhemlvbmFsaSBpIGRpIGxhdm9ybyBpbiB0ZWFtLg==", "base64": true },
-      { "label": "Competenze organizzative", "value": "RXNwZXJpZW56YSBuZWxsYSBnZXN0aW9uZSBkaSBwcm9nZXR0aSBpIHJpc29yc2Uu", "base64": true },
-      { "label": "Competenze digitali", "value": "T3R0aW1hIGNvbm9zY2VuemEgZGkgSmF2YVNjcmlwdCwgUHl0aG9uLCBHaXQsIExpbnV4Lg==", "base64": true }
+      {
+        "label": "Lingua madre",
+        "value": "Italiano",
+        "base64": false
+      },
+      {
+        "label": "Altre lingue",
+        "value": "Inglese",
+        "base64": false
+      },
+      {
+        "label": "Competenze comunicative",
+        "value": "Organizzo e conduco riunioni, presentazioni e workshop. Ho esperienza nella gestione di team e nella comunicazione con i clienti.",
+        "base64": false
+      },
+      {
+        "label": "Competenze organizzative",
+        "value": "Attività di rendicontazione e gestione del budget. Pianificazione e organizzazione di progetti complessi. Ho esperienza nella gestione di team e nella pianificazione delle attività.",
+        "base64": false
+      },
+      {
+        "label": "Competenze digitali",
+        "value": "Ottima conoscenza di Linux, Docker, Kubernetes, Terraform, Ansible, Python e AWS. Ho esperienza nella gestione di infrastrutture IT complesse e nella migrazione su cloud.",
+        "base64": false
+      }
     ]
   }
 ]

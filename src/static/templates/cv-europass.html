@@ -48,12 +48,22 @@
       {{#if items}}
         <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
           {{#each items}}
-            <div style="margin-bottom:0.5em;">
-              {{#if period}}<span style='font-weight:bold;'>{{period}}</span> {{/if}}
-              {{#if role}}{{role}} - {{company}}<br/>{{/if}}
-              {{#if title}}{{title}} - {{institute}}</span><br/>{{/if}}
-              {{#if contratto}}<span style="font-size:0.95em; color:#0074d9;">{{contratto}}</span><br/>{{/if}}
-              {{#if description}}<span>{{description}}</span>{{/if}}
+            <div style="margin-bottom:0.5em; display: flex; align-items: flex-start; gap: 12px;">
+              <div style="width: 90px; min-width: 90px; height: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 4px; border: 1px solid #eee; margin-right: 8px;">
+                {{#if companyLogoBase64}}
+                  <img src="{{companyLogoBase64}}" alt="Logo azienda" style="max-height:32px; max-width:80px; object-fit:contain; display:block; margin:auto;" />
+                {{/if}}
+              </div>
+              <div style="flex:1;">
+                <!-- Periodo, ruolo, titolo, contratto e descrizione -->
+                {{#if period}}<span style='font-weight:bold;'>{{period}}</span><br/> {{/if}}
+                {{#if company}}<span style='font-weight:bold;'>{{company}}</span>{{/if}}
+                {{#if companyWebSite}}<a href={{companyWebSite}}> - {{companyWebSite}}</a></span><br/>{{/if}}
+                {{#if role}}{{role}} - {{company}}<br/>{{/if}}
+                {{#if title}}{{title}} - {{institute}}</span><br/>{{/if}}
+                {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">Tipo di relazione: {{contract}}</span><br/>{{/if}}
+                {{#if description}}<span>{{{description}}}</span>{{/if}}
+              </div>
             </div>
           {{/each}}
         </div>

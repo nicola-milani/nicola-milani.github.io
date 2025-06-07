@@ -43,6 +43,12 @@ function decodeBase64(str) {
   }
 }
 
+// Utility per convertire i ritorni a capo (\n) in <br> o <p> per i campi descrizione
+// Se vuoi inserire direttamente <br> nel JSON, questa funzione non deve più modificare la descrizione
+function formatDescription(text) {
+  return text || '';
+}
+
 // Utility per caricare e compilare un template HTML con Handlebars
 // Se decode=true, decodifica i campi base64 prima di renderizzare
 async function renderCVPreview(templatePath, data, decode = false, signature = null) {
@@ -57,6 +63,23 @@ async function renderCVPreview(templatePath, data, decode = false, signature = n
         section.fields.forEach(field => {
           if (field.base64) {
             field.value = decodeBase64(field.value);
+          }
+        });
+      }
+      if (section.items) {
+        section.items.forEach(item => {
+          if (item.description) {
+            item.description = formatDescription(item.description);
+          }
+        });
+      }
+    });
+  } else {
+    data.forEach(section => {
+      if (section.items) {
+        section.items.forEach(item => {
+          if (item.description) {
+            item.description = formatDescription(item.description);
           }
         });
       }

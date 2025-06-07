@@ -12,12 +12,19 @@
     {{#if items}}
       <div style="margin-bottom:1em;">
         {{#each items}}
-          <div style="margin-bottom:0.5em; padding-left:10px; border-left:2px solid #bbb;">
-            {{#if period}}<span style='font-weight:bold; color:#0074d9;'>{{period}}</span> {{/if}}
-            {{#if role}}<span style="color:#222;">{{role}} - {{company}}</span><br/>{{/if}}
-            {{#if title}}<span style="color:#222;">{{title}} - {{institute}}</span><br/>{{/if}}
-            {{#if contratto}}<span style="font-size:0.95em; color:#0074d9;">{{contratto}}</span><br/>{{/if}}
-            {{#if description}}<span style="color:#444;">{{description}}</span>{{/if}}
+          <div style="margin-bottom:0.5em; padding-left:10px; border-left:2px solid #bbb; display: flex; align-items: flex-start; gap: 10px;">
+            <div style="width: 90px; min-width: 90px; height: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 4px; border: 1px solid #eee; margin-right: 8px;">
+              {{#if companyLogoBase64}}
+                <img src="{{companyLogoBase64}}" alt="Logo azienda" style="max-height:32px; max-width:80px; object-fit:contain; display:block; margin:auto;" />
+              {{/if}}
+            </div>
+            <div style="flex:1;">
+              {{#if period}}<span style='font-weight:bold; color:#0074d9;'>{{period}}</span> {{/if}}
+              {{#if role}}<span style="color:#222;">{{role}} - {{company}}</span><br/>{{/if}}
+              {{#if title}}<span style="color:#222;">{{title}} - {{institute}}</span><br/>{{/if}}
+              {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">{{contract}}</span><br/>{{/if}}
+              {{#if description}}<span style="color:#444;">{{{description}}}</span>{{/if}}
+            </div>
           </div>
         {{/each}}
       </div>
