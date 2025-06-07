@@ -1,0 +1,76 @@
+<!-- Wrapper principale del CV Europass -->
+<div id="cv-europass-wrapper" style="font-family: Arial, sans-serif; margin: auto; max-width: 900px; background: #fff; box-sizing: border-box; padding: 0 12px 0 12px;">
+  <!-- Header: logo Europass e dati anagrafici -->
+  <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 0.1em; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <!-- Logo Europass in alto a destra -->
+    <div style="align-self: flex-end; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 0.1em;">
+      {{#with (lookup data 0)}}
+      <img src="{{resumelogo}}" alt="Logo Europass" style="height: 60px; margin-top: 0; margin-bottom: 0; max-width: 120px; width: auto;" />
+      {{/with}}
+    </div>
+    <!-- Blocco dati anagrafici e foto -->
+    <div style="display: flex; flex-direction: row; align-items: center; background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 10px 12px; width: 100%; max-width: 900px; box-sizing: border-box;">
+      {{#with (lookup data 0)}}
+        <!-- Foto profilo se presente -->
+        {{#if photoBase64}}
+          <img src="{{photoBase64}}" alt="Foto" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; border: 2px solid #0074d9; margin-right: 12px; background: #fff;" />
+        {{/if}}
+        <!-- Tabella dati anagrafici -->
+        <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
+          <table style="width:100%;">
+            {{#each fields}}
+              <tr>
+                <td style="font-weight:bold; color:#0074d9; padding-right: 8px; text-align:right; white-space:nowrap;">{{label}}:</td>
+                <td style="color:#222;">{{value}}</td>
+              </tr>
+            {{/each}}
+          </table>
+        </div>
+      {{/with}}
+    </div>
+  </div>
+  <!-- Titolo principale -->
+  <!-- <h1 style="text-align:center; font-size:2em; margin-top: 0.1em;">Curriculum Vitae - Europass</h1>-->
+  <!-- Sezioni successive del CV (esperienze, istruzione, ecc.) -->
+  {{#each data}}
+    {{#unless @first}}
+      <!-- Titolo sezione -->
+      <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:0.1em;'>{{section}}</h2>
+      <!-- Campi tabellari della sezione -->
+      {{#if fields}}
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 14px 18px; margin-bottom: 1.2em; width: 100%; max-width: 900px; box-sizing: border-box;">
+          <table style="width:100%;">
+            {{#each fields}}
+              <tr><td style='width:35%; font-weight:bold; vertical-align:top; color:#0074d9; text-align:right; padding-right:8px; white-space:nowrap;'>{{label}}:</td><td style="color:#222;">{{value}}</td></tr>
+            {{/each}}
+          </table>
+        </div>
+      {{/if}}
+      <!-- Lista di item (es. esperienze, corsi, ecc.) -->
+      {{#if items}}
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 14px 18px; margin-bottom: 1.2em; width: 100%; max-width: 900px; box-sizing: border-box;">
+          {{#each items}}
+            <div style="margin-bottom:0.5em; display: flex; align-items: flex-start; gap: 12px;">
+              <!-- Colonna sinistra: nome azienda e periodo -->
+              <div style="width: 160px; min-width: 120px; max-width: 180px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; border-radius: 4px; border: 1px solid #eee; margin-right: 8px; padding: 6px 8px; font-size: 0.98em;">
+                {{#if company}}<div style="font-weight:bold; color:#0074d9;">{{company}}</div>{{/if}}
+                {{#if period}}<div style="color:#444; font-size:0.95em;">{{period}}</div>{{/if}}
+              </div>
+              <!-- Colonna destra: descrizione -->
+              <div style="flex:1;">
+                {{#if role}}<span style='font-weight:bold;'>{{role}}</span><br/>{{/if}}
+                {{#if title}}<span style='font-weight:bold;'>{{title}}</span><br/>{{/if}}
+                {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">Tipo di relazione: {{contract}}</span><br/>{{/if}}
+                {{#if description}}<span>{{{description}}}</span>{{/if}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{/if}}
+    {{/unless}}
+  {{/each}}
+  <!-- Firma con data di generazione, visibile solo se passata dal contesto -->
+  {{#if signature}}
+    <div style="margin-top: 32px; text-align: right; font-size: 0.95em; color: #555;">{{signature}}</div>
+  {{/if}}
+</div>

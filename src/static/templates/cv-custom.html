@@ -1,0 +1,36 @@
+<div style="font-family: 'Segoe UI', sans-serif; margin: auto; background: #f8f9fa; border-radius: 12px; box-shadow: 0 2px 8px #ccc; padding: 32px; max-width: 900px;">
+  <h1 style="text-align:center; color:#2c3e50; font-size:2.2em; letter-spacing:2px;">CV Personalizzato</h1>
+  {{#each data}}
+    <h2 style='color:#0074d9; font-size:1.3em; margin-top:1.5em; border-left: 4px solid #0074d9; padding-left: 8px;'>{{section}}</h2>
+    {{#if fields}}
+      <ul style="list-style:none; padding:0;">
+        {{#each fields}}
+          <li style="margin-bottom:6px;"><span style="font-weight:600; color:#555;">{{label}}:</span> <span style="color:#222;">{{value}}</span></li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    {{#if items}}
+      <div style="margin-bottom:1em;">
+        {{#each items}}
+          <div style="margin-bottom:0.5em; padding-left:10px; border-left:2px solid #bbb; display: flex; align-items: flex-start; gap: 10px;">
+            <div style="width: 90px; min-width: 90px; height: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 4px; border: 1px solid #eee; margin-right: 8px;">
+              {{#if companyLogoBase64}}
+                <img src="{{companyLogoBase64}}" alt="Logo azienda" style="max-height:32px; max-width:80px; object-fit:contain; display:block; margin:auto;" />
+              {{/if}}
+            </div>
+            <div style="flex:1;">
+              {{#if period}}<span style='font-weight:bold; color:#0074d9;'>{{period}}</span> {{/if}}
+              {{#if role}}<span style="color:#222;">{{role}} - {{company}}</span><br/>{{/if}}
+              {{#if title}}<span style="color:#222;">{{title}} - {{institute}}</span><br/>{{/if}}
+              {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">{{contract}}</span><br/>{{/if}}
+              {{#if description}}<span style="color:#444;">{{{description}}}</span>{{/if}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/each}}
+  {{#if signature}}
+    <div style="margin-top: 32px; text-align: right; font-size: 0.95em; color: #555;">{{signature}}</div>
+  {{/if}}
+</div>

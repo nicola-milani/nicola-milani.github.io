@@ -48,7 +48,6 @@
       {{ .Content }}
     {{ end }}
 
-    <span style="color: #999999; font-size: 60%;">Nifty <a href="https://codepen.io/wbeeftink/pen/dIaDH">tech tag lists</a> from <a class="pen-owner-link" href="https://codepen.io/wbeeftink">Wouter Beeftink</a> </span>
     {{ with $.GitInfo }}{{ with $.Site.Params.gitCommitPrefix }} | <span style="color: #999999; font-size: 60%;">Page content generated from commit: <a href="{{ . }}/{{ $.GitInfo.AbbreviatedHash }}" title="log: {{ $.GitInfo.Subject }}">{{ $.GitInfo.AbbreviatedHash }}</a>{{ end }}{{end}}
   </div>
   <!-- jquery core JavaScript -->
@@ -65,7 +64,7 @@
   <!-- Plugin JavaScript -->
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js" integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ==" crossorigin="anonymous"></script>
   <!-- Custom scripts for this template -->
-  <script async src="js/resume.js"></script>
+  <script async src="{{ "/js/resume.js" | absURL }}"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.google.analytics.trackerID }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];

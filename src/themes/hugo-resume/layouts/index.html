@@ -39,4 +39,8 @@
          {{ partial "sectionSummary" . }}
       {{ end }}
    {{ end }}
+   {{ if .Site.Params.showDownloadResume }}
+       {{ partial "portfolio/downloadResume.html" . }}
+   {{ end }}
+
 {{ end }}
