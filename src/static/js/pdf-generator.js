@@ -91,7 +91,7 @@ async function renderCVPreview(templatePath, data, decode = false, signature = n
 }
 
 // Variabile globale per tracciare lo stile selezionato
-let selectedStyle = 'europass';
+let selectedStyle = 'europass-no-logo';
 
 // Event listener per mostrare la preview Europass
 // Carica i dati e il template Europass, senza decodifica base64
@@ -104,6 +104,16 @@ document.getElementById('show-europass-preview').addEventListener('click', async
   await renderCVPreview('/templates/cv-europass.html', data, false);
 });
 
+// Event listener per mostrare la preview Europass
+// Carica i dati e il template Europass, senza decodifica base64
+// Mostra la preview solo dopo selezione esplicita
+document.getElementById('show-europass-no-logo-preview').addEventListener('click', async function(e) {
+  e.preventDefault();
+  selectedStyle = 'europass-no-logo';
+  const response = await fetch('/data/pdf-content.json');
+  const data = await response.json();
+  await renderCVPreview('/templates/cv-europass-no-logo.html', data, false);
+});
 // Event listener per mostrare la preview Custom
 // Carica i dati e il template custom, senza decodifica base64
 document.getElementById('show-custom-preview').addEventListener('click', async function(e) {
@@ -137,24 +147,34 @@ document.getElementById('generate-pdf').addEventListener('click', async function
   // Genera la data in formato YYYYMMDD
   const pad = n => n.toString().padStart(2, '0');
   const dateForFile = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
-  const templateName = selectedStyle; // 'europass' o 'custom'
+  const templateName = selectedStyle;
   const signature = `Documento generato il ${dateString}`;
   let templatePath = '/templates/cv-europass.html';
   if (selectedStyle === 'custom') {
     templatePath = '/templates/cv-custom.html';
+  } else if (selectedStyle === 'europass-no-logo') {
+    templatePath = '/templates/cv-europass-no-logo.html';
   }
   await renderCVPreview(templatePath, data, true, signature);
   const element = document.getElementById('cv-preview');
   if (element) {
     await waitForImagesToLoad(element); // Attendi caricamento immagini
+    // Aggiungi un delay di 300ms per sicurezza dopo il rendering
+    await new Promise(resolve => setTimeout(resolve, 300));
     if (typeof window.html2pdf !== 'undefined') {
-      window.html2pdf().from(element).set({ filename: `milani_nicola-${templateName}-${dateForFile}.pdf` }).save();
+      const opt = {
+        filename: `milani_nicola-${templateName}-${dateForFile}.pdf`,
+        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+        html2canvas: { scale: 1, backgroundColor: '#fff' }
+      };
+      window.html2pdf().set(opt).from(element).save();
     } else {
       alert('html2pdf non è caricato!');
     }
   }
   // Dopo la generazione, ripristina la preview senza firma
-  await renderCVPreview(templatePath, data, false, null);
+  //await renderCVPreview(templatePath, data, false, null);
 });
 
 // Event listener per PDF semplice di test (se il bottone esiste)
