@@ -44,11 +44,12 @@
         "companyWebSite": "https://www.lab4it.com",
         "description": "Come sviluppatore JAVA ho implementato alcune modifiche al codice dei gestioni distribuiti dall'azienda.",
         "period": "2016 - 2017"
-      }]},
-      {
-        "section": "Progetti rilevanti come professionista Freeelance",
-        "items":
-      [
+      }
+    ]
+  },
+  {
+    "section": "Progetti rilevanti come professionista Freeelance",
+    "items": [
       {
         "role": "Sistemista e DevOps Engineer",
         "company": "Makarenalabs",
@@ -116,7 +117,6 @@
         "description": "Corso di formazione per la certificazione EUCIP IT Administrator. Il corso ha fornito le competenze necessarie per la gestione e l'amministrazione di sistemi informatici, con un focus su Linux, Windows e Networking a dipendenti di altre società",
         "period": "2018"
       }
-
     ]
   },
   {
@@ -131,13 +131,11 @@
         "title": "Randomidi",
         "description": "Sistema di generazione di file midi da usare per basi musicali facendo uso di algoritmi di machine learning. Il sistema è stato sviluppato in python e utilizza le librerie Tensorflow e Keras per l'addestramento del modello.",
         "company": "Python, birra e Machine Learning"
-
       },
       {
         "title": "Hotcoin",
         "description": "Progetto python per la determinazione dei migliori acquisti e vendite di criptovalute. Il sistema è stato sviluppato definendo un algoritmo di machine learning che analizza i dati storici delle criptovalute e fornisce raccomandazioni per gli investimenti.",
-         "company": "Python, birra e Machine Learning"
-
+        "company": "Python, birra e Machine Learning"
       },
       {
         "title": "Hotmaps",
@@ -149,11 +147,11 @@
         "description": "Progettazione di un sistema in cloud per la gestione del parco macchine aziendale, scolastico e univesitario. Il business model è arrivato in finale alla competizione Startup di Università di Maastricht nel 2016.",
         "company": "Startup"
       },
-    {
+      {
         "company": "MIUR",
         "description": "Partecipante al tavolo tecnico MIUR per il Piano Nazionale Scuola Digitale",
         "title": "Stackeolder MIUR"
-    },
+      },
       {
         "title": "Presidente associazine",
         "description": "Organizzatore Linux Day, attività di promozione del software libero.",
