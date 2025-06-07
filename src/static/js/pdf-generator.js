@@ -114,6 +114,18 @@ document.getElementById('show-custom-preview').addEventListener('click', async f
   await renderCVPreview('/templates/cv-custom.html', data, false);
 });
 
+// Utility per attendere il caricamento di tutte le immagini in un container
+async function waitForImagesToLoad(container) {
+  const images = Array.from(container.getElementsByTagName('img'));
+  if (images.length === 0) return;
+  await Promise.all(images.map(img => {
+    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+    return new Promise(resolve => {
+      img.onload = img.onerror = resolve;
+    });
+  }));
+}
+
 // Event listener per generare il PDF
 // Carica i dati, decodifica i campi base64, renderizza il template selezionato
 // e genera il PDF dalla preview visibile
@@ -122,6 +134,10 @@ document.getElementById('generate-pdf').addEventListener('click', async function
   const data = await response.json();
   const now = new Date();
   const dateString = now.toLocaleDateString('it-IT', { year: 'numeric', month: '2-digit', day: '2-digit' });
+  // Genera la data in formato YYYYMMDD
+  const pad = n => n.toString().padStart(2, '0');
+  const dateForFile = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+  const templateName = selectedStyle; // 'europass' o 'custom'
   const signature = `Documento generato il ${dateString}`;
   let templatePath = '/templates/cv-europass.html';
   if (selectedStyle === 'custom') {
@@ -130,8 +146,9 @@ document.getElementById('generate-pdf').addEventListener('click', async function
   await renderCVPreview(templatePath, data, true, signature);
   const element = document.getElementById('cv-preview');
   if (element) {
+    await waitForImagesToLoad(element); // Attendi caricamento immagini
     if (typeof window.html2pdf !== 'undefined') {
-      window.html2pdf().from(element).save();
+      window.html2pdf().from(element).set({ filename: `milani_nicola-${templateName}-${dateForFile}.pdf` }).save();
     } else {
       alert('html2pdf non è caricato!');
     }

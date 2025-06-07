@@ -1,17 +1,17 @@
 <!-- Wrapper principale del CV Europass -->
-<div id="cv-europass-wrapper" style="font-family: Arial, sans-serif; margin: auto; max-width: 900px; background: #fff; box-sizing: border-box; padding: 0 24px;">
+<div id="cv-europass-wrapper" style="font-family: Arial, sans-serif; margin: auto; max-width: 900px; background: #fff; box-sizing: border-box; padding: 80px 12px 0 12px;">
   <!-- Header: logo Europass e dati anagrafici -->
-  <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.5em; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+  <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 1.2em; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
     <!-- Logo Europass in alto a destra -->
-    <div style="align-self: flex-end; width: 100%; display: flex; justify-content: flex-end;">
-      <img src="https://europass.europa.eu/sites/default/files/inline-images/Europass-Full-Colour-Brand-Mark.png" alt="Logo Europass" style="height: 60px; margin-top: 10px; margin-bottom: 10px; max-width: 180px; width: auto;" />
+    <div style="align-self: flex-end; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 0.2em;">
+      <img src="img/Europass-Full-Colour-Brand-Mark.png" alt="Logo Europass" style="height: 54px; margin-top: 2px; margin-bottom: 2px; max-width: 160px; width: auto;" />
     </div>
     <!-- Blocco dati anagrafici e foto -->
-    <div style="display: flex; flex-direction: row; align-items: center; background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; width: 100%; max-width: 900px; box-sizing: border-box;">
+    <div style="display: flex; flex-direction: row; align-items: center; background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 14px 18px; width: 100%; max-width: 900px; box-sizing: border-box;">
       {{#with (lookup data 0)}}
         <!-- Foto profilo se presente -->
         {{#if photoBase64}}
-          <img src="{{photoBase64}}" alt="Foto" style="width: 110px; height: 110px; object-fit: cover; border-radius: 50%; border: 2px solid #0074d9; margin-right: 24px; background: #fff;" />
+          <img src="{{photoBase64}}" alt="Foto" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; border: 2px solid #0074d9; margin-right: 18px; background: #fff;" />
         {{/if}}
         <!-- Tabella dati anagrafici -->
         <div style="display: flex; flex-direction: column; align-items: flex-start; flex: 1;">
@@ -28,15 +28,15 @@
     </div>
   </div>
   <!-- Titolo principale -->
-  <h1 style="text-align:center; font-size:2em;">Curriculum Vitae - Europass</h1>
+  <h1 style="text-align:center; font-size:2em; margin-top: 0.5em;">Curriculum Vitae - Europass</h1>
   <!-- Sezioni successive del CV (esperienze, istruzione, ecc.) -->
   {{#each data}}
     {{#unless @first}}
       <!-- Titolo sezione -->
-      <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:1.5em;'>{{section}}</h2>
+      <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:1.2em;'>{{section}}</h2>
       <!-- Campi tabellari della sezione -->
       {{#if fields}}
-        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 14px 18px; margin-bottom: 1.2em; width: 100%; max-width: 900px; box-sizing: border-box;">
           <table style="width:100%;">
             {{#each fields}}
               <tr><td style='width:35%; font-weight:bold; vertical-align:top; color:#0074d9; text-align:right; padding-right:8px; white-space:nowrap;'>{{label}}:</td><td style="color:#222;">{{value}}</td></tr>
@@ -46,7 +46,7 @@
       {{/if}}
       <!-- Lista di item (es. esperienze, corsi, ecc.) -->
       {{#if items}}
-        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 18px 24px; margin-bottom: 1.5em; width: 100%; max-width: 900px; box-sizing: border-box;">
+        <div style="background: #f8f9fa; border-radius: 12px; box-shadow: 0 1px 4px #ccc; padding: 14px 18px; margin-bottom: 1.2em; width: 100%; max-width: 900px; box-sizing: border-box;">
           {{#each items}}
             <div style="margin-bottom:0.5em; display: flex; align-items: flex-start; gap: 12px;">
               <div style="width: 90px; min-width: 90px; height: 40px; min-height: 40px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 4px; border: 1px solid #eee; margin-right: 8px;">
