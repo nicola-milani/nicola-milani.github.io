@@ -18,6 +18,7 @@ lastName = "Milani"
 profileImage = "img/nicola.jpeg"
 showEducation = false
 showBlog = false
+showWiki = true
 showEmployExperience = true
 showFreelanceExperience = true
 showOtherActivity = true

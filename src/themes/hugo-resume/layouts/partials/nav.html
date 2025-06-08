@@ -58,7 +58,11 @@
             <a class="nav-link js-scroll-trigger" href="/#blog">Blog</a>
           </li>
       {{ end }}
-
+      {{ if .Site.Params.showWiki }}
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="/wiki/">Il paiolo magico</a>
+          </li>
+      {{ end }}
     </ul>
   </div>
 </nav>
