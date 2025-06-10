@@ -1,14 +1,26 @@
+<!-- Sezione Competenze (Skills) -->
 <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
   <div class="my-auto" id="skills-content">
-    <h2 class="mb-5">Alcune compentenze</h2>
+    <h2 class="mb-5">Cose da portare con se</h2>
     {{ range $.Site.Data.skills }}
+        <!-- Titolo del gruppo di competenze (es: Linguaggi, Framework, ecc.) -->
         <div class="subheading mb-3 skills-heading">{{ .grouping }}</div>
             <ul>
             {{ range .skills }}
-                {{ if isset . "name" }}
-                    {{ $devicon := cond (in $.Site.Data.devicons (lower .icon)) (lower .icon) (cond (in $.Site.Data.devicons (lower .name)) (lower .name) "terminal_badge") }}
+                {{ if isset . "icon" }}
+                    <!-- Se la skill ha il campo 'icon', usa direttamente il valore come classe -->
                     <li class="list-inline-item">
-                      <i class="devicons devicon-{{ $devicon }}-plain"></i>
+                      <i class="devicons {{ .icon }}"></i>
+                      {{if isset . "link"}}
+                          <a href="{{.link}}">{{ .name }}</a>
+                      {{ else }}
+                          {{ .name }}
+                      {{ end }}
+                    </li>
+                {{ else if isset . "name" }}
+                    <!-- Se la skill è un oggetto con campo 'name' ma senza 'icon', mostra una icona di default -->
+                    <li class="list-inline-item">
+                      <i class="devicons devicon-terminal_badge-plain"></i>
                       {{if isset . "link"}}
                           <a href="{{.link}}">{{ .name }}</a>
                       {{ else }}
@@ -16,8 +28,9 @@
                       {{ end }}
                     </li>
                 {{ else }}
+                  <!-- Se la skill è una semplice stringa -->
                   <li class="list-inline-item">
-                    <i class="devicons devicon-{{ cond (in $.Site.Data.devicons (lower .)) (lower .) "terminal_badge" }}-plain"></i>
+                    <i class="devicons devicon-terminal_badge-plain"></i>
                     {{ . }}
                   </li>
                 {{ end }}

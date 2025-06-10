@@ -1,33 +1,87 @@
 [
   {
-      "grouping":"Architetture",
-      "skills":[ "IP Networking","DNS","Firewalls","Load Balancing","Microservices","RESTful APIs","SaaS/PaaS/IaaS","AWS"]
-  },{
-      "grouping":"Linguaggi, Sistemi operativi e strutmenti",
-      "skills":[ "Java","Python","git","linux","bash","Windows","NGINX","GO"]
+    "grouping": "Linguaggi, Sistemi operativi",
+    "skills": [
+      "Java",
+      "Python",
+      "git",
+      "Linux",
+      "Bash",
+      "Windows",
+      "NGINX",
+      "GO"
+    ]
   },
   {
-      "grouping":"Platform Development & Administration",
-      "skills":[ "Jira","Trello","Bitbucket","NGINX"]
+    "grouping": "Progetti e Gestione",
+    "skills": [
+      {
+        "name": "Jira",
+        "icon": "devicon-jira-plain"
+      },
+      {
+        "name": "Trello",
+        "icon": "devicon-trello-plain"
+      },
+      {
+        "name": "git",
+        "icon": "devicon-git-plain"
+      },
+            {
+        "name": "gitlab",
+        "icon": "devicon-gitlab-plain"
+      },
+                  {
+        "name": "jenkins",
+        "icon": "devicon-jenkins-plain"
+      }
+    ]
   },
   {
-      "grouping":"Data Management",
-      "skills":[
-        {"name":"DynamoDB","icon":"dynamodb"},
-        {"name":"MySql","icon":"mysql"},
-        {"name":"Postgresql","icon":"postgresql"},
-        {"name":"MongoDB","icon":"mongodb-plain"},
-        {"name":"ForgeRock DS","icon":"ldap"},
-        {"name":"Cassandra","icon":"cassandra"}
-      ]
+    "grouping": "Data Management",
+    "skills": [
+      {
+        "name": "DynamoDB",
+        "icon": "devicon-dynamodb-plain"
+      },
+      {
+        "name": "MySql",
+        "icon": "devicon-mysql-plain"
+      },
+      {
+        "name": "Postgresql",
+        "icon": "devicon-postgresql-plain"
+      },
+      {
+        "name": "MongoDB",
+        "icon": "devicon-mongodb-plain"
+      },
+      {
+        "name": "ForgeRock DS",
+        "icon": "ldap"
+      },
+      {
+        "name": "Cassandra",
+        "icon": "devicon-cassandra-plain"
+      }
+    ]
   },
   {
-    "grouping":"Containers & Cloud",
-      "skills":[
-          {"name":"Docker","link":"https://docker.com"},
-          {"name":"AWS","link":"https://aws.amazon.com"},
-          {"name":"Google Cloud","link":"https://cloud.google.com"},
-          {"name":"Kubernetes","link":"https://kubernetes.io"}
-      ]
+    "grouping": "Containers & Cloud",
+    "skills": [
+      {
+        "name": "Docker",
+        "icon": "devicon-docker-plain"      },
+      {
+        "name": "AWS",
+        "icon": "devicon-amazonwebservices-plain-wordmark"      },
+      {
+        "name": "Google Cloud",
+        "icon": "devicon-googlecloud-plain"
+      },
+      {
+        "name": "Kubernetes",
+        "icon": "devicon-kubernetes-plain"      }
+    ]
   }
 ]
