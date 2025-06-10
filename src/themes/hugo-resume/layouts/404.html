@@ -1,5 +1,13 @@
 {{ define "main"}}
-<h1>
-    Oops, 404
-</h1>
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; color: #444; font-family: Arial, sans-serif;">
+  <h1 style="font-size: 3em; color: #0074d9; margin-bottom: 0.2em;">Oops! Pagina non trovata</h1>
+  <p style="font-size: 1.3em; margin-bottom: 1.5em;">La pagina che cerchi non esiste o è stata spostata.</p>
+  <a href="/" style="display: inline-block; padding: 0.7em 2em; background: #0074d9; color: #fff; border-radius: 6px; text-decoration: none; font-size: 1.1em; box-shadow: 0 2px 8px #0074d933;">Torna alla Home</a>
+  <div style="margin-top: 2.5em; opacity: 0.7;">
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="56" stroke="#0074d9" stroke-width="6" fill="#f8f9fa"/>
+      <text x="60" y="75" text-anchor="middle" font-size="48" fill="#0074d9" font-family="Arial, sans-serif">404</text>
+    </svg>
+  </div>
+</div>
 {{ end }}
