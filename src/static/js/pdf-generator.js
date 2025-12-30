@@ -1,194 +1,314 @@
-// All'avvio, genera un div di test fuori da Bootstrap
-//window.onload = async function() {
-//  // Carica il JSON e genera l'HTML del CV di default (solo per test/placeholder)
-//  const response = await fetch('/data/pdf-content.json');
-//  const data = await response.json();
-//  const container = document.getElementById('cv-preview');
-//  if (!container) return;
-//  let html = '<div style="font-family: Arial, sans-serif; margin: auto;">';
-//  html += '<h1 style="text-align:center; font-size:2em;">Curriculum Vitae</h1>';
-//  // Ciclo sulle sezioni del CV
-//  data.forEach(section => {
-//    html += `<h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:1.5em;'>${section.section}</h2>`;
-//    // Sezione con campi tabellari
-//    if (section.fields) {
-//      html += '<table style="width:100%; margin-bottom:1em;">';
-//      section.fields.forEach(field => {
-//        html += `<tr><td style='width:35%; font-weight:bold; vertical-align:top;'>${field.label}:</td><td>${field.value}</td></tr>`;
-//      });
-//      html += '</table>';
-//    }
-//    // Sezione con lista di item (es. esperienze)
-//    if (section.items) {
-//      section.items.forEach(item => {
-//        html += '<div style="margin-bottom:0.5em;">';
-//        if (item.period) html += `<span style='font-weight:bold;'>${item.period}</span> `;
-//        if (item.role && item.company) html += `<span>${item.role} - ${item.company}</span><br/>`;
-//        if (item.title && item.institute) html += `<span>${item.title} - ${item.institute}</span><br/>`;
-//        if (item.description) html += `<span>${item.description}</span>`;
-//        html += '</div>';
-//      });
-//    }
-//  });
-//  html += '</div>';
-//  container.innerHTML = html;
-//};
+/**
+ * Configurazione centralizzata del generatore PDF
+ */
+const CONFIG = {
+  endpoints: {
+    data: '/data/pdf-content.json'
+  },
+  templates: {
+    'europass': '/templates/cv-europass.html',
+    'europass-no-logo': '/templates/cv-europass-no-logo.html',
+    'custom': '/templates/cv-custom.html'
+  },
+  defaultStyle: 'europass-no-logo'
+};
 
-// Utility per decodificare una stringa base64
+/**
+ * Stato dell'applicazione
+ */
+const STATE = {
+  selectedStyle: CONFIG.defaultStyle,
+  isGenerating: false
+};
+
+/**
+ * Utility per decodificare una stringa base64 (supporto UTF-8)
+ */
 function decodeBase64(str) {
   try {
-    return decodeURIComponent(escape(window.atob(str)));
+    // Metodo moderno compatibile con UTF-8
+    const binaryString = window.atob(str);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
   } catch (e) {
-    return str;
+    console.warn('Errore decodifica Base64 moderna, fallback su metodo legacy', e);
+    try {
+      return decodeURIComponent(escape(window.atob(str)));
+    } catch (e2) {
+      console.error('Errore decodifica Base64:', e2);
+      return str;
+    }
   }
 }
 
-// Utility per convertire i ritorni a capo (\n) in <br> o <p> per i campi descrizione
-// Se vuoi inserire direttamente <br> nel JSON, questa funzione non deve più modificare la descrizione
+/**
+ * Utility per formattare le descrizioni (placeholder)
+ */
 function formatDescription(text) {
   return text || '';
 }
 
-// Utility per caricare e compilare un template HTML con Handlebars
-// Se decode=true, decodifica i campi base64 prima di renderizzare
+/**
+ * Fetch wrapper con gestione errori
+ */
+async function fetchData(url, type = 'json') {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    return type === 'json' ? await response.json() : await response.text();
+  } catch (error) {
+    console.error(`Errore caricamento ${url}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Carica e compila il template Handlebars
+ */
 async function renderCVPreview(templatePath, data, decode = false, signature = null) {
   const container = document.getElementById('cv-preview');
   if (!container) return;
-  const templateResp = await fetch(templatePath);
-  const templateHtml = await templateResp.text();
-  // Decodifica i campi base64 se richiesto (solo per PDF)
-  if (decode) {
-    data.forEach(section => {
-      if (section.fields) {
-        section.fields.forEach(field => {
-          if (field.base64) {
-            field.value = decodeBase64(field.value);
-          }
-        });
-      }
-      if (section.items) {
-        section.items.forEach(item => {
-          if (item.description) {
-            item.description = formatDescription(item.description);
-          }
-        });
-      }
-    });
-  } else {
-    data.forEach(section => {
-      if (section.items) {
-        section.items.forEach(item => {
-          if (item.description) {
-            item.description = formatDescription(item.description);
-          }
-        });
-      }
-    });
+
+  try {
+    const templateHtml = await fetchData(templatePath, 'text');
+
+    // Clona i dati per non mutare l'oggetto originale se non necessario
+    // o processa direttamente (qui manteniamo la logica originale di mutazione/processing)
+    // Nota: la logica originale mutava i dati 'data'.
+
+    if (decode) {
+      console.log('Decodifica Base64 in corso...');
+      processDataFields(data, true);
+    } else {
+      processDataFields(data, false);
+    }
+
+    const compiled = Handlebars.compile(templateHtml);
+    container.innerHTML = compiled({ data, signature });
+  } catch (error) {
+    container.innerHTML = `<div class="alert alert-danger">Errore nel rendering della preview: ${error.message}</div>`;
   }
-  // Compila e inserisce il template Handlebars, passando anche la firma se presente
-  const compiled = Handlebars.compile(templateHtml);
-  container.innerHTML = compiled({ data, signature });
 }
 
-// Variabile globale per tracciare lo stile selezionato
-let selectedStyle = 'europass-no-logo';
+/**
+ * Processa i campi dei dati (decodifica e formattazione)
+ */
+function processDataFields(data, shouldDecode) {
+  data.forEach(section => {
+    if (section.fields && shouldDecode) {
+      section.fields.forEach(field => {
+        if (field.base64) {
+          field.value = decodeBase64(field.value);
+        }
+      });
+    }
+    if (section.items) {
+      section.items.forEach(item => {
+        if (item.description) {
+          item.description = formatDescription(item.description);
+        }
+      });
+    }
+  });
+}
 
-// Event listener per mostrare la preview Europass
-// Carica i dati e il template Europass, senza decodifica base64
-// Mostra la preview solo dopo selezione esplicita
-document.getElementById('show-europass-preview').addEventListener('click', async function(e) {
-  e.preventDefault();
-  selectedStyle = 'europass';
-  const response = await fetch('/data/pdf-content.json');
-  const data = await response.json();
-  await renderCVPreview('/templates/cv-europass.html', data, false);
-});
+/**
+ * Gestisce il cambio di stile della preview
+ */
+async function handlePreviewChange(style) {
+  const templatePath = CONFIG.templates[style];
+  if (!templatePath) return;
 
-// Event listener per mostrare la preview Europass
-// Carica i dati e il template Europass, senza decodifica base64
-// Mostra la preview solo dopo selezione esplicita
-document.getElementById('show-europass-no-logo-preview').addEventListener('click', async function(e) {
-  e.preventDefault();
-  selectedStyle = 'europass-no-logo';
-  const response = await fetch('/data/pdf-content.json');
-  const data = await response.json();
-  await renderCVPreview('/templates/cv-europass-no-logo.html', data, false);
-});
-// Event listener per mostrare la preview Custom
-// Carica i dati e il template custom, senza decodifica base64
-document.getElementById('show-custom-preview').addEventListener('click', async function(e) {
-  e.preventDefault();
-  selectedStyle = 'custom';
-  const response = await fetch('/data/pdf-content.json');
-  const data = await response.json();
-  await renderCVPreview('/templates/cv-custom.html', data, false);
-});
+  STATE.selectedStyle = style;
 
-// Utility per attendere il caricamento di tutte le immagini in un container
+  // Feedback visivo semplice
+  const container = document.getElementById('cv-preview');
+  if (container) container.style.opacity = '0.5';
+
+  try {
+    const data = await fetchData(CONFIG.endpoints.data);
+    await renderCVPreview(templatePath, data, false);
+  } catch (error) {
+    alert('Impossibile aggiornare la preview. Controlla la console per i dettagli.');
+  } finally {
+    if (container) container.style.opacity = '1';
+  }
+}
+
+/**
+ * Attende il caricamento delle immagini
+ */
 async function waitForImagesToLoad(container) {
   const images = Array.from(container.getElementsByTagName('img'));
   if (images.length === 0) return;
-  await Promise.all(images.map(img => {
+
+  const promises = images.map(img => {
     if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
     return new Promise(resolve => {
       img.onload = img.onerror = resolve;
     });
-  }));
+  });
+
+  return Promise.all(promises);
 }
+
+
+/**
+ * Crea un iframe nascosto per la stampa isolata
+ */
+async function printElement(element) {
+  // Crea iframe nascosto
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'fixed';
+  iframe.style.right = '0';
+  iframe.style.bottom = '0';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentWindow.document;
+
+  // Scrivi il contenuto
+  // Implementiamo stili base per il reset e la stampa
+  doc.open();
+  doc.write(`
+    <html>
+      <head>
+        <title>Curriculum Vitae</title>
+        <style>
+          body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: Arial, sans-serif;
+            background: white;
+          }
+          @page { 
+            size: auto;   /* auto is the initial value */
+            margin: 0mm;  /* this affects the margin in the printer settings */
+          }
+          /* Assicuriamoci che i colori di sfondo vengano stampati */
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          /* Riprendiamo le regole inline dei template */
+          .keep-together {
+            page-break-inside: avoid;
+            break-inside: avoid;
+          }
+        </style>
+      </head>
+      <body>
+        ${element.innerHTML}
+      </body>
+    </html>
+  `);
+  doc.close();
+
+  // Attendi caricamento immagini nell'iframe
+  await waitForImagesToLoad(doc.body);
+
+  // Focus e stampa
+  iframe.contentWindow.focus();
+  iframe.contentWindow.print();
+
+  // Rimuovi iframe dopo la stampa (con un delay per permettere l'invio al driver di stampa)
+  setTimeout(() => {
+    document.body.removeChild(iframe);
+  }, 2000);
+}
+
 
 // Event listener per generare il PDF
-// Carica i dati, decodifica i campi base64, renderizza il template selezionato
-// e genera il PDF dalla preview visibile
-document.getElementById('generate-pdf').addEventListener('click', async function() {
-  const response = await fetch('/data/pdf-content.json');
-  const data = await response.json();
-  const now = new Date();
-  const dateString = now.toLocaleDateString('it-IT', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  // Genera la data in formato YYYYMMDD
-  const pad = n => n.toString().padStart(2, '0');
-  const dateForFile = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
-  const templateName = selectedStyle;
-  const signature = `Documento generato il ${dateString}`;
-  let templatePath = '/templates/cv-europass.html';
-  if (selectedStyle === 'custom') {
-    templatePath = '/templates/cv-custom.html';
-  } else if (selectedStyle === 'europass-no-logo') {
-    templatePath = '/templates/cv-europass-no-logo.html';
-  }
-  await renderCVPreview(templatePath, data, true, signature);
-  const element = document.getElementById('cv-preview');
-  if (element) {
-    await waitForImagesToLoad(element); // Attendi caricamento immagini
-    // Aggiungi un delay di 300ms per sicurezza dopo il rendering
-    await new Promise(resolve => setTimeout(resolve, 300));
-    if (typeof window.html2pdf !== 'undefined') {
-      const opt = {
-        filename: `milani_nicola-${templateName}-${dateForFile}.pdf`,
-        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-        html2canvas: { scale: 1, backgroundColor: '#fff' }
-      };
-      window.html2pdf().set(opt).from(element).save();
-    } else {
-      alert('html2pdf non è caricato!');
-    }
-  }
-  // Dopo la generazione, ripristina la preview senza firma
-  //await renderCVPreview(templatePath, data, false, null);
-});
+// Carica i dati, renderizza il template selezionato e lancia la stampa tramite iframe
+async function handlePdfExectution() {
+  const btn = document.getElementById('generate-pdf');
+  if (STATE.isGenerating || !btn) return;
 
-// Event listener per PDF semplice di test (se il bottone esiste)
-const btnSimple = document.getElementById('generate-pdf-simple');
-if (btnSimple) {
-  btnSimple.addEventListener('click', function() {
-    // Genera un PDF di esempio semplice
-    const doc = new window.jspdf.jsPDF();
-    doc.setFontSize(22);
-    doc.text('PDF di esempio', 20, 30);
-    doc.setFontSize(14);
-    doc.text('Questo è un PDF generato come test.', 20, 50);
-    doc.save('esempio-semplice.pdf');
-  });
+  // UI Loading State
+  STATE.isGenerating = true;
+  const originalText = btn.innerHTML;
+  btn.innerHTML = 'Preparazione stampa...';
+  btn.disabled = true;
+
+  try {
+    const data = await fetchData(CONFIG.endpoints.data);
+    const now = new Date();
+    const dateString = now.toLocaleDateString('it-IT', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+    // Inseriamo la firma se desiderata
+    const signature = `Documento generato il ${dateString}`;
+
+    let templatePath = CONFIG.templates[STATE.selectedStyle];
+
+    // Renderizza la preview "pulita" ma con la firma pronta per la stampa
+    await renderCVPreview(templatePath, data, true, signature);
+
+    const element = document.getElementById('cv-preview');
+    if (element) {
+      await waitForImagesToLoad(element); // Attendi caricamento immagini nel DOM principale
+
+      // Breve ritardo per assicurare il rendering del DOM
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Lancia la stampa isolata
+      await printElement(element);
+    }
+  } catch (error) {
+    console.error('Errore durante la preparazione alla stampa:', error);
+    alert('Errore durante la preparazione: ' + error.message);
+  } finally {
+    // Ripristino UI
+    STATE.isGenerating = false;
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }
 }
 
+/**
+ * Inizializzazione Event Listeners
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Listener per i bottoni di preview
+  const previewButtons = {
+    'show-europass-preview': 'europass',
+    'show-europass-no-logo-preview': 'europass-no-logo',
+    'show-custom-preview': 'custom'
+  };
 
+  Object.entries(previewButtons).forEach(([id, style]) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handlePreviewChange(style);
+      });
+    }
+  });
+
+  // Listener generazione PDF principale
+  const generateBtn = document.getElementById('generate-pdf');
+  if (generateBtn) {
+    generateBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handlePdfExectution();
+    });
+  }
+
+  // Listener PDF semplice (test)
+  const btnSimple = document.getElementById('generate-pdf-simple');
+  if (btnSimple) {
+    btnSimple.addEventListener('click', () => {
+      const doc = new window.jspdf.jsPDF();
+      doc.setFontSize(22);
+      doc.text('PDF di esempio', 20, 30);
+      doc.setFontSize(14);
+      doc.text('Questo è un PDF generato come test.', 20, 50);
+      doc.save('esempio-semplice.pdf');
+    });
+  }
+});
