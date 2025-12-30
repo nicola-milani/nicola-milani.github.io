@@ -48,6 +48,7 @@
   {{#each data}}
   {{#unless @first}}
   <!-- Titolo sezione -->
+  {{#if forcePageBreak}}<div style="page-break-before: always; height: 1px;"></div>{{/if}}
   <h2 style='border-bottom:1px solid #ccc; font-size:1.2em; margin-top:0.5em;'>{{section}}</h2>
   <!-- Campi tabellari della sezione -->
   {{#if fields}}

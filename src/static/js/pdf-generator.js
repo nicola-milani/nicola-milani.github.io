@@ -98,6 +98,11 @@ async function renderCVPreview(templatePath, data, decode = false, signature = n
  */
 function processDataFields(data, shouldDecode) {
   data.forEach(section => {
+    // Aggiungi page break forzato per la sezione Competenze Personali
+    if (section.section === 'Competenze Personali') {
+      section.forcePageBreak = true;
+    }
+
     if (section.fields && shouldDecode) {
       section.fields.forEach(field => {
         if (field.base64) {
