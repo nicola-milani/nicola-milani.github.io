@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/devcontainers/javascript-node:${NODE_VERSION}
 # VARIANT can be either 'hugo' for the standard version or 'hugo_extended' for the extended version.
 ARG VARIANT=hugo
 # VERSION can be either 'latest' or a specific version number
-ARG VERSION=0.127.0
+ARG VERSION=0.153.5
 #ARG VERSION=68.0.3
 
 # Download Hugo

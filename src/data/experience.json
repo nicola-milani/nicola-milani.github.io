@@ -1,10 +1,10 @@
 [
     {
-    "role": "DevOps Engineer",
-    "company": "Tinexta Infocert SpA",
-    "companyLogo": "img/logo_infocert.svg",
-    "companyWebSite": "https://www.infocert.it/",
-    "summary": "DevOps Engineer, Cloud Architect, Service Owner and Product Owner.\n",
-    "range": "Gigno 2021 - Present"
+        "role": "DevOps Engineer",
+        "company": "Tinexta Infocert SpA",
+        "companyLogo": "img/logo_infocert.svg",
+        "companyWebSite": "https://www.infocert.it/",
+        "summary": "DevOps Engineer, Cloud Architect, Service Owner and Product Owner.\nGestione end-to-end del prodotto SPID, bilanciando i requisiti normativi AgID con l’efficienza dell’infrastruttura cloud\n",
+        "range": "Gigno 2021 - Present"
     }
 ]
