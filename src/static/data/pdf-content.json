@@ -123,11 +123,6 @@
     "section": "Progetti personali",
     "items": [
       {
-        "title": "Volontario protezione civile",
-        "description": "Ho svolto attività di ricerca persone in superficie con il mio cane da ricerca. Ho partecipato a diverse esercitazioni e corsi di formazione partecipando nella segreteria dell'associazione.",
-        "company": "Diade unità cinofile Odv"
-      },
-      {
         "title": "Randomidi",
         "description": "Sistema di generazione di file midi da usare per basi musicali facendo uso di algoritmi di machine learning. Il sistema è stato sviluppato in python e utilizza le librerie Tensorflow e Keras per l'addestramento del modello.",
         "company": "Python, birra e Machine Learning"
@@ -156,6 +151,11 @@
         "title": "Presidente associazine",
         "description": "Organizzatore Linux Day, attività di promozione del software libero.",
         "company": "Lug Verona"
+      },
+      {
+        "title": "Volontario protezione civile",
+        "description": "Ho svolto attività di ricerca persone in superficie con il mio cane da ricerca. Ho partecipato a diverse esercitazioni e corsi di formazione partecipando nella segreteria dell'associazione.",
+        "company": "Diade unità cinofile Odv"
       }
     ]
   },
@@ -184,17 +184,17 @@
       },
       {
         "label": "Competenze comunicative & Leadership",
-        "value": "Organizzo e conduco riunioni, presentazioni e workshop. Ho esperienza nella gestione di team e nella comunicazione con i clienti.",
+        "value": "Consolidata esperienza nella conduzione di workshop, presentazioni e meeting strategici. Capacità di tradurre requisiti tecnici complessi in concetti comprensibili per stakeholder di business e legali.",
         "base64": false
       },
       {
         "label": "Competenze organizzative",
-        "value": "Consolidata esperienza nella conduzione di workshop, presentazioni e meeting strategici. Capacità di tradurre requisiti tecnici complessi in concetti comprensibili per stakeholder di business e legali. Capacità nel comunicare visioni di prodotto e roadmap tecnologiche, acquisita anche attraverso l'attivismo e il coordinamento di gruppi di lavoro. Gestione e coordinamento di team interfunzionali secondo metodologie SCRUM e Kanban, focalizzandosi sulla massimizzazione del valore del prodotto. Attitudine al controllo dei costi (approccio FinOps) e alla rendicontazione finanziaria di progetti complessi, bilanciando investimenti tecnologici e ROI",
+        "value": "Abilità nel comunicare visioni di prodotto e roadmap tecnologiche,acquisita anche attraverso l'attivismo e il coordinamento di gruppi di lavoro. Gestione e coordinamento di team interfunzionali secondo metodologie SCRUM e Kanban, focalizzandosi sulla massimizzazione del valore del prodotto. Attitudine al controllo dei costi (approccio FinOps) e alla rendicontazione finanziaria di progetti complessi, bilanciando investimenti tecnologici e ROI",
         "base64": false
       },
       {
         "label": "Digital & Cloud Strategy",
-        "value": "Visione olistica nella gestione di infrastrutture critiche e scalabili (AWS, Kubernetes), con forte orientamento alla sicurezza (SecOps) e all'automazione (DevOps). Approccio analitico e metodologico derivante da oltre dieci anni di esperienza hands-on su sistemi complessi e migrazioni cloud.",
+        "value": "Visione complessiva nella gestione di infrastrutture critiche e scalabili (AWS, Kubernetes), con forte orientamento alla sicurezza (SecOps) e all'automazione (DevOps). Approccio analitico e metodologico derivante da oltre dieci anni di esperienza hands-on su sistemi complessi e migrazioni cloud.",
         "base64": false
       }
     ]
