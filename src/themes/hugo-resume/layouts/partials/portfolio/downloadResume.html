@@ -6,14 +6,24 @@
     <h2 class="mb-5">Genera CV aggiornato</h2>
     <div class="d-flex align-items-center gap-2 mb-3">
       <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Lingua
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+          <li><a class="dropdown-item active" href="#" id="lang-it">🇮🇹 Italiano</a></li>
+          <li><a class="dropdown-item" href="#" id="lang-en">🇬🇧 English</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" id="previewDropdown" data-bs-toggle="dropdown"
           aria-expanded="false">
           Scegli stile preview
         </button>
         <ul class="dropdown-menu" aria-labelledby="previewDropdown">
-          <li><a class="dropdown-item" href="#" id="show-europass-preview">Stile Europass</a></li>
-          <li><a class="dropdown-item" href="#" id="show-europass-no-logo-preview">Stile Europass senza loghi</a></li>
-          <li><a class="dropdown-item" href="#" id="show-custom-preview">Stile Personalizzato</a></li>
+          <li><a class="dropdown-item" href="#" id="show-europass-preview">Europass</a></li>
+          <li><a class="dropdown-item" href="#" id="show-europass-no-logo-preview">Europass senza loghi</a></li>
+          <li><a class="dropdown-item" href="#" id="show-custom-preview">Personalizzato</a></li>
         </ul>
       </div>
       <button id="generate-pdf" class="btn btn-success">Genera PDF dalla preview</button>

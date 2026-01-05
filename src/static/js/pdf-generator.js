@@ -3,14 +3,23 @@
  */
 const CONFIG = {
   endpoints: {
-    data: '/data/pdf-content.json'
+    data: {
+      it: '/data/pdf-content.json',
+      en: '/data/pdf-content-en.json'
+    }
   },
   templates: {
     'europass': '/templates/cv-europass.html',
     'europass-no-logo': '/templates/cv-europass-no-logo.html',
     'custom': '/templates/cv-custom.html'
   },
-  defaultStyle: 'europass-no-logo'
+  defaultStyle: 'europass-no-logo',
+  defaultLanguage: 'it',
+  styleNames: {
+    'europass': 'Europass',
+    'europass-no-logo': 'Europass senza loghi',
+    'custom': 'Personalizzato'
+  }
 };
 
 /**
@@ -18,6 +27,7 @@ const CONFIG = {
  */
 const STATE = {
   selectedStyle: CONFIG.defaultStyle,
+  selectedLanguage: CONFIG.defaultLanguage,
   isGenerating: false
 };
 
@@ -129,18 +139,51 @@ async function handlePreviewChange(style) {
 
   STATE.selectedStyle = style;
 
+  // Update dropdown button label
+  const labelBtn = document.getElementById('previewDropdown');
+  if (labelBtn) {
+    const styleName = CONFIG.styleNames[style] || style;
+    labelBtn.textContent = `Stile: ${styleName}`;
+  }
+
   // Feedback visivo semplice
   const container = document.getElementById('cv-preview');
   if (container) container.style.opacity = '0.5';
 
   try {
-    const data = await fetchData(CONFIG.endpoints.data);
+    const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
+    const data = await fetchData(dataUrl);
     await renderCVPreview(templatePath, data, false);
   } catch (error) {
     alert('Impossibile aggiornare la preview. Controlla la console per i dettagli.');
   } finally {
     if (container) container.style.opacity = '1';
   }
+}
+
+/**
+ * Gestisce il cambio di lingua
+ */
+async function handleLanguageChange(lang) {
+  if (STATE.selectedLanguage === lang) return;
+
+  STATE.selectedLanguage = lang;
+
+  // Update dropdown button label
+  const labelBtn = document.getElementById('languageDropdown');
+  if (labelBtn) {
+    const flag = lang === 'it' ? '🇮🇹' : '🇬🇧';
+    const langName = lang === 'it' ? 'Italiano' : 'English';
+    labelBtn.textContent = `${flag} Lingua: ${langName}`;
+  }
+
+  // Update UI dropdown active state
+  document.querySelectorAll('[id^="lang-"]').forEach(el => {
+    el.classList.toggle('active', el.id === `lang-${lang}`);
+  });
+
+  // Re-render preview with new language
+  await handlePreviewChange(STATE.selectedStyle);
 }
 
 /**
@@ -241,12 +284,15 @@ async function handlePdfExectution() {
   btn.disabled = true;
 
   try {
-    const data = await fetchData(CONFIG.endpoints.data);
+    const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
+    const data = await fetchData(dataUrl);
     const now = new Date();
-    const dateString = now.toLocaleDateString('it-IT', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const locale = STATE.selectedLanguage === 'it' ? 'it-IT' : 'en-US';
+    const dateString = now.toLocaleDateString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' });
 
     // Inseriamo la firma se desiderata
-    const signature = `Documento generato il ${dateString}`;
+    const signaturePrefix = STATE.selectedLanguage === 'it' ? 'Documento generato il' : 'Document generated on';
+    const signature = `${signaturePrefix} ${dateString}`;
 
     let templatePath = CONFIG.templates[STATE.selectedStyle];
 
@@ -277,7 +323,24 @@ async function handlePdfExectution() {
 /**
  * Inizializzazione Event Listeners
  */
-document.addEventListener('DOMContentLoaded', () => {
+function initialize() {
+  console.log('Inizializzazione generatore PDF...');
+
+  // Imposta label iniziale lingua
+  const langLabelBtn = document.getElementById('languageDropdown');
+  if (langLabelBtn) {
+    const flag = STATE.selectedLanguage === 'it' ? '🇮🇹' : '🇬🇧';
+    const langName = STATE.selectedLanguage === 'it' ? 'Italiano' : 'English';
+    langLabelBtn.textContent = `${flag} Lingua: ${langName}`;
+  }
+
+  // Imposta label iniziale stile
+  const styleLabelBtn = document.getElementById('previewDropdown');
+  if (styleLabelBtn) {
+    const styleName = CONFIG.styleNames[STATE.selectedStyle] || STATE.selectedStyle;
+    styleLabelBtn.textContent = `Stile: ${styleName}`;
+  }
+
   // Listener per i bottoni di preview
   const previewButtons = {
     'show-europass-preview': 'europass',
@@ -290,7 +353,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         handlePreviewChange(style);
+        return false;
+      });
+    }
+  });
+
+  // Listener per i bottoni di lingua
+  const languageButtons = {
+    'lang-it': 'it',
+    'lang-en': 'en'
+  };
+
+  Object.entries(languageButtons).forEach(([id, lang]) => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleLanguageChange(lang);
+        return false;
       });
     }
   });
@@ -307,7 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Listener PDF semplice (test)
   const btnSimple = document.getElementById('generate-pdf-simple');
   if (btnSimple) {
-    btnSimple.addEventListener('click', () => {
+    btnSimple.addEventListener('click', (e) => {
+      e.preventDefault();
       const doc = new window.jspdf.jsPDF();
       doc.setFontSize(22);
       doc.text('PDF di esempio', 20, 30);
@@ -316,4 +400,11 @@ document.addEventListener('DOMContentLoaded', () => {
       doc.save('esempio-semplice.pdf');
     });
   }
-});
+}
+
+// Avvia inizializzazione se il DOM è pronto o attendi
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initialize);
+} else {
+  initialize();
+}
