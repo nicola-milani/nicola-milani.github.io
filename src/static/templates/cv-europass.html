@@ -45,7 +45,7 @@
   <!-- Titolo principale -->
   <!-- <h1 style="text-align:center; font-size:2em; margin-top: 0.5em;">Curriculum Vitae - Europass</h1>-->
   <!-- Sezioni successive del CV (esperienze, istruzione, ecc.) -->
-  {{#each data}}
+  {{#each sections}}
   {{#unless @first}}
   <!-- Titolo sezione -->
   {{#if forcePageBreak}}<div style="page-break-before: always; height: 1px;"></div>{{/if}}
@@ -86,7 +86,7 @@
         {{#if companyWebSite}}<a href={{companyWebSite}}> - {{companyWebSite}}</a></span><br />{{/if}}
         {{#if role}}{{role}} - {{company}}<br />{{/if}}
         {{#if title}}{{title}} - {{institute}}</span><br />{{/if}}
-        {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">Tipo di relazione:
+        {{#if contract}}<span style="font-size:0.95em; color:#0074d9;">{{../../labels.relationLabel}}:
           {{contract}}</span><br />{{/if}}
         {{#if description}}<span>{{{description}}}</span>{{/if}}
       </div>

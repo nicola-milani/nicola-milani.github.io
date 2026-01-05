@@ -91,13 +91,14 @@ async function renderCVPreview(templatePath, data, decode = false, signature = n
 
     if (decode) {
       console.log('Decodifica Base64 in corso...');
-      processDataFields(data, true);
+      processDataFields(data.sections, true);
     } else {
-      processDataFields(data, false);
+      processDataFields(data.sections, false);
     }
 
     const compiled = Handlebars.compile(templateHtml);
-    container.innerHTML = compiled({ data, signature });
+    const { labels, sections } = data;
+    container.innerHTML = compiled({ labels, sections, signature });
   } catch (error) {
     container.innerHTML = `<div class="alert alert-danger">Errore nel rendering della preview: ${error.message}</div>`;
   }
@@ -106,8 +107,8 @@ async function renderCVPreview(templatePath, data, decode = false, signature = n
 /**
  * Processa i campi dei dati (decodifica e formattazione)
  */
-function processDataFields(data, shouldDecode) {
-  data.forEach(section => {
+function processDataFields(sections, shouldDecode) {
+  sections.forEach(section => {
     // Aggiungi page break forzato per la sezione Competenze Personali
     if (section.section === 'Competenze Personali') {
       section.forcePageBreak = true;
@@ -131,6 +132,24 @@ function processDataFields(data, shouldDecode) {
 }
 
 /**
+ * Aggiorna i parametri query nell'URL senza ricaricare la pagina
+ */
+function updateUrlParams() {
+  const url = new URL(window.location.href);
+  const prevLang = url.searchParams.get('lang');
+  const prevStyle = url.searchParams.get('style');
+
+  // Evita aggiornamenti ridondanti
+  if (prevLang === STATE.selectedLanguage && prevStyle === STATE.selectedStyle) {
+    return;
+  }
+
+  url.searchParams.set('lang', STATE.selectedLanguage);
+  url.searchParams.set('style', STATE.selectedStyle);
+  window.history.replaceState({}, '', url.toString());
+}
+
+/**
  * Gestisce il cambio di stile della preview
  */
 async function handlePreviewChange(style) {
@@ -138,6 +157,17 @@ async function handlePreviewChange(style) {
   if (!templatePath) return;
 
   STATE.selectedStyle = style;
+
+  // Update UI dropdown active state for styles
+  const styleButtonIds = {
+    'europass': 'show-europass-preview',
+    'europass-no-logo': 'show-europass-no-logo-preview',
+    'custom': 'show-custom-preview'
+  };
+  Object.entries(styleButtonIds).forEach(([s, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', s === style);
+  });
 
   // Update dropdown button label
   const labelBtn = document.getElementById('previewDropdown');
@@ -152,8 +182,22 @@ async function handlePreviewChange(style) {
 
   try {
     const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
-    const data = await fetchData(dataUrl);
-    await renderCVPreview(templatePath, data, false);
+    const fullData = await fetchData(dataUrl);
+
+    // Aggiorna titolo sezione in downloadResume.html
+    const sectionTitle = document.querySelector('.resume-section h2');
+    if (sectionTitle && fullData.labels && fullData.labels.sectionTitle) {
+      sectionTitle.textContent = fullData.labels.sectionTitle;
+    }
+
+    // Aggiorna testo bottone generazione PDF
+    const generateBtn = document.getElementById('generate-pdf');
+    if (generateBtn && fullData.labels && fullData.labels.generateBtn) {
+      generateBtn.textContent = fullData.labels.generateBtn;
+    }
+
+    await renderCVPreview(templatePath, fullData, false);
+    updateUrlParams();
   } catch (error) {
     alert('Impossibile aggiornare la preview. Controlla la console per i dettagli.');
   } finally {
@@ -285,7 +329,7 @@ async function handlePdfExectution() {
 
   try {
     const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
-    const data = await fetchData(dataUrl);
+    const fullData = await fetchData(dataUrl);
     const now = new Date();
     const locale = STATE.selectedLanguage === 'it' ? 'it-IT' : 'en-US';
     const dateString = now.toLocaleDateString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -297,7 +341,7 @@ async function handlePdfExectution() {
     let templatePath = CONFIG.templates[STATE.selectedStyle];
 
     // Renderizza la preview "pulita" ma con la firma pronta per la stampa
-    await renderCVPreview(templatePath, data, true, signature);
+    await renderCVPreview(templatePath, fullData, true, signature);
 
     const element = document.getElementById('cv-preview');
     if (element) {
@@ -326,6 +370,18 @@ async function handlePdfExectution() {
 function initialize() {
   console.log('Inizializzazione generatore PDF...');
 
+  // Leggi parametri URL
+  const params = new URLSearchParams(window.location.search);
+  const langParam = params.get('lang');
+  const styleParam = params.get('style');
+
+  if (langParam && CONFIG.endpoints.data[langParam]) {
+    STATE.selectedLanguage = langParam;
+  }
+  if (styleParam && CONFIG.templates[styleParam]) {
+    STATE.selectedStyle = styleParam;
+  }
+
   // Imposta label iniziale lingua
   const langLabelBtn = document.getElementById('languageDropdown');
   if (langLabelBtn) {
@@ -340,6 +396,11 @@ function initialize() {
     const styleName = CONFIG.styleNames[STATE.selectedStyle] || STATE.selectedStyle;
     styleLabelBtn.textContent = `Stile: ${styleName}`;
   }
+
+  // Imposta stato attivo iniziale per la lingua
+  document.querySelectorAll('[id^="lang-"]').forEach(el => {
+    el.classList.toggle('active', el.id === `lang-${STATE.selectedLanguage}`);
+  });
 
   // Listener per i bottoni di preview
   const previewButtons = {
@@ -400,6 +461,21 @@ function initialize() {
       doc.save('esempio-semplice.pdf');
     });
   }
+
+  // Trigger preview iniziale
+  handlePreviewChange(STATE.selectedStyle).then(() => {
+    // Forza lo scroll all'ancora se presente dopo il primo rendering
+    if (window.location.hash) {
+      const hash = window.location.hash;
+      setTimeout(() => {
+        const target = document.querySelector(hash);
+        if (target) {
+          console.log(`Scrolling to ${hash}...`);
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    }
+  });
 }
 
 // Avvia inizializzazione se il DOM è pronto o attendi
