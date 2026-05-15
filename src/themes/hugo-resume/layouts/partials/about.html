@@ -26,7 +26,7 @@
             {{ range .Site.Data.certifications }}
                 <li class="list-inline-item">
                   <a href="{{ .proof }}" data-toggle="tooltip" title="{{ .name }}" data-offset="0 10" rel="me">
-                    <img src="{{ .badge }}" width=75 alt="{{ .name }}" />
+                    <img src="{{ .badge }}" srcset="{{ .badge }} 1x, {{ .badge2x }} 2x" width="{{ .width }}" height="{{ .height }}" alt="{{ .name }}" />
                   </a>
                 </li>
             {{ end }}
