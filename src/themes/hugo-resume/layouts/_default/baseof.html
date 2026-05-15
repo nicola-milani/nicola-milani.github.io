@@ -34,9 +34,26 @@
     <noscript><link rel="stylesheet" href="{{ "css/resume.css" | absURL }}"></noscript>
   <link rel="preload" href="{{ "css/tweaks.css" | absURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ "css/tweaks.css" | absURL }}"></noscript>
-  <link rel="preload" href="{{ "css/resume-override.css" | absURL }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="{{ "css/resume-override.css" | absURL }}"></noscript>
   {{ hugo.Generator }}
+  {{- if .IsHome }}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}",
+    "url": "{{ .Site.BaseURL | default .Permalink }}",
+    "image": "{{ .Site.Params.profileImage | absURL }}",
+    "email": "{{ .Site.Params.email }}",
+    "address": "{{ .Site.Params.address }}",
+    "sameAs": [
+      {{- $handles := .Site.Params.handles -}}
+      {{- range $i, $h := $handles }}{{ if $i }},{{ end }}
+      "{{ $h.link }}"
+      {{- end }}
+    ]
+  }
+  </script>
+  {{- end }}
   {{ block "headfiles" . }}
    <!-- pl;aceholder -->
   {{ end }}

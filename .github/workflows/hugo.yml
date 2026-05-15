@@ -6,6 +6,10 @@ on:
   push:
     branches: ["master"]
 
+  # Validate (no deploy) on pull requests
+  pull_request:
+    branches: ["master"]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -46,8 +50,17 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
-      - name: Install Node.js dependencies
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Validate CV JSON data
+        run: |
+          for f in src/static/data/pdf-content*.json; do
+            echo "Validating $f"
+            jq empty "$f"
+          done
+      - name: Validate CV templates exist
+        run: |
+          test -f src/static/templates/cv-europass.html
+          test -f src/static/templates/cv-europass-no-logo.html
+          test -f src/static/templates/cv-custom.html
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
@@ -62,8 +75,9 @@ jobs:
         with:
           path: ./src/public
 
-  # Deployment job
+  # Deployment job (runs only on push to master / manual dispatch, not on PRs)
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

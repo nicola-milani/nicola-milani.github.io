@@ -43,8 +43,15 @@
   </div>
   <!-- Titolo principale -->
   <!-- <h1 style="text-align:center; font-size:2em; margin-top: 0.1em;">Curriculum Vitae - Europass</h1>-->
+  <!-- Paragrafo di presentazione -->
+  {{#if presentation}}
+  <div style="background: #e8f4f8; border-left: 4px solid #0074d9; padding: 16px; margin: 16px 0; border-radius: 4px; font-style: italic; color: #333; page-break-after: avoid;">
+    {{presentation}}
+  </div>
+  {{/if}}
   <!-- Sezioni successive del CV (esperienze, istruzione, ecc.) -->
   {{#each sections}}
+  {{#if @first}}<div style="page-break-before: avoid; height: 1px;"></div>{{/if}}
   {{#unless @first}}
   <!-- Titolo sezione -->
   {{#if forcePageBreak}}<div style="page-break-before: always; height: 1px;"></div>{{/if}}

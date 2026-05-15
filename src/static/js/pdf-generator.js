@@ -1,42 +1,51 @@
 /**
- * Configurazione centralizzata del generatore PDF
+ * Configurazione centralizzata del generatore PDF.
+ * Per aggiungere una lingua o uno stile, basta aggiungere una entry qui.
  */
 const CONFIG = {
-  endpoints: {
-    data: {
-      it: '/data/pdf-content.json',
-      en: '/data/pdf-content-en.json'
-    }
-  },
-  templates: {
-    'europass': '/templates/cv-europass.html',
-    'europass-no-logo': '/templates/cv-europass-no-logo.html',
-    'custom': '/templates/cv-custom.html'
-  },
   defaultStyle: 'europass-no-logo',
   defaultLanguage: 'it',
-  styleNames: {
-    'europass': 'Europass',
-    'europass-no-logo': 'Europass senza loghi',
-    'custom': 'Personalizzato'
-  }
+  languages: {
+    it: {
+      label: 'Italiano',
+      flag: '🇮🇹',
+      locale: 'it-IT',
+      dataUrl: '/data/pdf-content.json',
+      signaturePrefix: 'Documento generato il',
+    },
+    en: {
+      label: 'English',
+      flag: '🇬🇧',
+      locale: 'en-US',
+      dataUrl: '/data/pdf-content-en.json',
+      signaturePrefix: 'Document generated on',
+    },
+  },
+  styles: {
+    'europass': {
+      label: 'Europass',
+      templateUrl: '/templates/cv-europass.html',
+    },
+    'europass-no-logo': {
+      label: 'Europass senza loghi',
+      templateUrl: '/templates/cv-europass-no-logo.html',
+    },
+    'custom': {
+      label: 'Personalizzato',
+      templateUrl: '/templates/cv-custom.html',
+    },
+  },
 };
 
-/**
- * Stato dell'applicazione
- */
 const STATE = {
   selectedStyle: CONFIG.defaultStyle,
   selectedLanguage: CONFIG.defaultLanguage,
-  isGenerating: false
+  isGenerating: false,
+  labels: {},
 };
 
-/**
- * Utility per decodificare una stringa base64 (supporto UTF-8)
- */
 function decodeBase64(str) {
   try {
-    // Metodo moderno compatibile con UTF-8
     const binaryString = window.atob(str);
     const bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
@@ -44,441 +53,273 @@ function decodeBase64(str) {
     }
     return new TextDecoder().decode(bytes);
   } catch (e) {
-    console.warn('Errore decodifica Base64 moderna, fallback su metodo legacy', e);
+    console.warn('Base64 decode (modern) failed, falling back', e);
     try {
       return decodeURIComponent(escape(window.atob(str)));
     } catch (e2) {
-      console.error('Errore decodifica Base64:', e2);
+      console.error('Base64 decode failed:', e2);
       return str;
     }
   }
 }
 
-/**
- * Utility per formattare le descrizioni (placeholder)
- */
-function formatDescription(text) {
-  return text || '';
-}
-
-/**
- * Fetch wrapper con gestione errori
- */
 async function fetchData(url, type = 'json') {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    return type === 'json' ? await response.json() : await response.text();
-  } catch (error) {
-    console.error(`Errore caricamento ${url}:`, error);
-    throw error;
-  }
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status} on ${url}`);
+  return type === 'json' ? await response.json() : await response.text();
 }
 
-/**
- * Carica e compila il template Handlebars
- */
+function processDataFields(sections, shouldDecode) {
+  sections.forEach(section => {
+    if (section.fields && shouldDecode) {
+      section.fields.forEach(field => {
+        if (field.base64) field.value = decodeBase64(field.value);
+      });
+    }
+    if (section.items) {
+      let prevCompany = null;
+      section.items.forEach(item => {
+        item.displayCompany = !!item.company && item.company !== prevCompany;
+        prevCompany = item.company;
+        // Long entries (with bullet lists) may span pages; short ones stay together
+        item.allowBreak = /<ul[\s>]/i.test(item.description || '');
+      });
+    }
+  });
+}
+
+function buildHeaderData(sections) {
+  const first = sections[0];
+  if (!first || !first.fields) return { headerName: null, headerContacts: [] };
+  const nameField = first.fields.find(f => /^(nome|name)$/i.test(f.label || ''));
+  const headerName = nameField ? nameField.value : null;
+  const headerContacts = first.fields
+    .filter(f => f !== nameField)
+    .map(f => f.value)
+    .filter(Boolean);
+  return { headerName, headerContacts };
+}
+
 async function renderCVPreview(templatePath, data, decode = false, signature = null) {
   const container = document.getElementById('cv-preview');
   if (!container) return;
 
   try {
     const templateHtml = await fetchData(templatePath, 'text');
-
-    // Clona i dati per non mutare l'oggetto originale se non necessario
-    // o processa direttamente (qui manteniamo la logica originale di mutazione/processing)
-    // Nota: la logica originale mutava i dati 'data'.
-
-    if (decode) {
-      console.log('Decodifica Base64 in corso...');
-      processDataFields(data.sections, true);
-    } else {
-      processDataFields(data.sections, false);
-    }
-
+    processDataFields(data.sections, decode);
     const compiled = Handlebars.compile(templateHtml);
-    const { labels, sections } = data;
-    container.innerHTML = compiled({ labels, sections, signature });
+    const { labels, sections, presentation } = data;
+    const { headerName, headerContacts } = buildHeaderData(sections);
+    container.innerHTML = compiled({ labels, sections, presentation, signature, headerName, headerContacts });
   } catch (error) {
     container.innerHTML = `<div class="alert alert-danger">Errore nel rendering della preview: ${error.message}</div>`;
   }
 }
 
-/**
- * Processa i campi dei dati (decodifica e formattazione)
- */
-function processDataFields(sections, shouldDecode) {
-  sections.forEach(section => {
-    // Aggiungi page break forzato per la sezione Competenze Personali
-    if (section.section === 'Competenze Personali') {
-      section.forcePageBreak = true;
-    }
-
-    if (section.fields && shouldDecode) {
-      section.fields.forEach(field => {
-        if (field.base64) {
-          field.value = decodeBase64(field.value);
-        }
-      });
-    }
-    if (section.items) {
-      section.items.forEach(item => {
-        if (item.description) {
-          item.description = formatDescription(item.description);
-        }
-      });
-    }
-  });
-}
-
-/**
- * Aggiorna i parametri query nell'URL senza ricaricare la pagina
- */
 function updateUrlParams() {
   const url = new URL(window.location.href);
-  const prevLang = url.searchParams.get('lang');
-  const prevStyle = url.searchParams.get('style');
-
-  // Evita aggiornamenti ridondanti
-  if (prevLang === STATE.selectedLanguage && prevStyle === STATE.selectedStyle) {
-    return;
-  }
-
+  if (url.searchParams.get('lang') === STATE.selectedLanguage &&
+      url.searchParams.get('style') === STATE.selectedStyle) return;
   url.searchParams.set('lang', STATE.selectedLanguage);
   url.searchParams.set('style', STATE.selectedStyle);
   window.history.replaceState({}, '', url.toString());
 }
 
-/**
- * Gestisce il cambio di stile della preview
- */
-async function handlePreviewChange(style) {
-  const templatePath = CONFIG.templates[style];
-  if (!templatePath) return;
+function applyLabelsToUi(labels) {
+  STATE.labels = labels || {};
 
-  STATE.selectedStyle = style;
+  const title = document.getElementById('downloadResume-title');
+  if (title && labels.sectionTitle) title.textContent = labels.sectionTitle;
 
-  // Update UI dropdown active state for styles
-  const styleButtonIds = {
-    'europass': 'show-europass-preview',
-    'europass-no-logo': 'show-europass-no-logo-preview',
-    'custom': 'show-custom-preview'
-  };
-  Object.entries(styleButtonIds).forEach(([s, id]) => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('active', s === style);
-  });
+  const generateBtn = document.getElementById('generate-pdf');
+  if (generateBtn && labels.generateBtn) generateBtn.textContent = labels.generateBtn;
 
-  // Update dropdown button label
-  const labelBtn = document.getElementById('previewDropdown');
-  if (labelBtn) {
-    const styleName = CONFIG.styleNames[style] || style;
-    labelBtn.textContent = `Stile: ${styleName}`;
+  const langBtn = document.getElementById('languageDropdown');
+  if (langBtn) {
+    const lang = CONFIG.languages[STATE.selectedLanguage];
+    const dropdownLabel = labels.languageDropdown || 'Lingua';
+    langBtn.textContent = `${lang.flag} ${dropdownLabel}: ${lang.label}`;
   }
 
-  // Feedback visivo semplice
+  const styleBtn = document.getElementById('previewDropdown');
+  if (styleBtn) {
+    const styleLabel = CONFIG.styles[STATE.selectedStyle]?.label || STATE.selectedStyle;
+    const dropdownLabel = labels.styleDropdown || 'Stile';
+    styleBtn.textContent = `${dropdownLabel}: ${styleLabel}`;
+  }
+}
+
+function setActiveDropdownItem(menuId, activeId) {
+  const menu = document.getElementById(menuId);
+  if (!menu) return;
+  menu.querySelectorAll('.dropdown-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === activeId);
+  });
+}
+
+async function handlePreviewChange(style) {
+  const styleDef = CONFIG.styles[style];
+  if (!styleDef) return;
+
+  STATE.selectedStyle = style;
+  setActiveDropdownItem('previewDropdown-menu', style);
+
   const container = document.getElementById('cv-preview');
   if (container) container.style.opacity = '0.5';
 
   try {
-    const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
+    const dataUrl = CONFIG.languages[STATE.selectedLanguage].dataUrl;
     const fullData = await fetchData(dataUrl);
-
-    // Aggiorna titolo sezione in downloadResume.html
-    const sectionTitle = document.querySelector('.resume-section h2');
-    if (sectionTitle && fullData.labels && fullData.labels.sectionTitle) {
-      sectionTitle.textContent = fullData.labels.sectionTitle;
-    }
-
-    // Aggiorna testo bottone generazione PDF
-    const generateBtn = document.getElementById('generate-pdf');
-    if (generateBtn && fullData.labels && fullData.labels.generateBtn) {
-      generateBtn.textContent = fullData.labels.generateBtn;
-    }
-
-    await renderCVPreview(templatePath, fullData, false);
+    applyLabelsToUi(fullData.labels);
+    await renderCVPreview(styleDef.templateUrl, fullData, false);
     updateUrlParams();
   } catch (error) {
-    alert('Impossibile aggiornare la preview. Controlla la console per i dettagli.');
+    console.error('Preview update failed:', error);
+    alert(STATE.labels.errorPreview || 'Errore aggiornamento preview.');
   } finally {
     if (container) container.style.opacity = '1';
   }
 }
 
-/**
- * Gestisce il cambio di lingua
- */
 async function handleLanguageChange(lang) {
-  if (STATE.selectedLanguage === lang) return;
-
+  if (STATE.selectedLanguage === lang || !CONFIG.languages[lang]) return;
   STATE.selectedLanguage = lang;
-
-  // Update dropdown button label
-  const labelBtn = document.getElementById('languageDropdown');
-  if (labelBtn) {
-    const flag = lang === 'it' ? '🇮🇹' : '🇬🇧';
-    const langName = lang === 'it' ? 'Italiano' : 'English';
-    labelBtn.textContent = `${flag} Lingua: ${langName}`;
-  }
-
-  // Update UI dropdown active state
-  document.querySelectorAll('[id^="lang-"]').forEach(el => {
-    el.classList.toggle('active', el.id === `lang-${lang}`);
-  });
-
-  // Re-render preview with new language
+  setActiveDropdownItem('languageDropdown-menu', lang);
   await handlePreviewChange(STATE.selectedStyle);
 }
 
-/**
- * Attende il caricamento delle immagini
- */
 async function waitForImagesToLoad(container) {
   const images = Array.from(container.getElementsByTagName('img'));
   if (images.length === 0) return;
-
   const promises = images.map(img => {
     if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
-    return new Promise(resolve => {
-      img.onload = img.onerror = resolve;
-    });
+    return new Promise(resolve => { img.onload = img.onerror = resolve; });
   });
-
   return Promise.all(promises);
 }
 
-
-/**
- * Crea un iframe nascosto per la stampa isolata
- */
 async function printElement(element) {
-  // Crea iframe nascosto
   const iframe = document.createElement('iframe');
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
+  iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
   document.body.appendChild(iframe);
 
   const doc = iframe.contentWindow.document;
-
-  // Scrivi il contenuto
-  // Implementiamo stili base per il reset e la stampa
   doc.open();
-  doc.write(`
-    <html>
-      <head>
-        <title>Curriculum Vitae</title>
-        <style>
-          body { 
-            margin: 0; 
-            padding: 0; 
-            font-family: Arial, sans-serif;
-            background: white;
-          }
-          @page { 
-            size: auto;   /* auto is the initial value */
-            margin: 0mm;  /* this affects the margin in the printer settings */
-          }
-          /* Assicuriamoci che i colori di sfondo vengano stampati */
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-          }
-          /* Riprendiamo le regole inline dei template */
-          .keep-together {
-            page-break-inside: avoid;
-            break-inside: avoid;
-          }
-        </style>
-      </head>
-      <body>
-        ${element.innerHTML}
-      </body>
-    </html>
-  `);
+  doc.write(`<html><head><title>Curriculum Vitae</title><style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: white; }
+    @page { size: auto; margin: 0mm; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .keep-together { page-break-inside: avoid; break-inside: avoid; }
+  </style></head><body>${element.innerHTML}</body></html>`);
   doc.close();
 
-  // Attendi caricamento immagini nell'iframe
   await waitForImagesToLoad(doc.body);
 
-  // Focus e stampa
+  const cleanup = () => {
+    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+  };
+  iframe.contentWindow.onafterprint = cleanup;
+  // Safety net: some browsers don't reliably fire onafterprint
+  setTimeout(cleanup, 60000);
+
   iframe.contentWindow.focus();
   iframe.contentWindow.print();
-
-  // Rimuovi iframe dopo la stampa (con un delay per permettere l'invio al driver di stampa)
-  setTimeout(() => {
-    document.body.removeChild(iframe);
-  }, 2000);
 }
 
-
-// Event listener per generare il PDF
-// Carica i dati, renderizza il template selezionato e lancia la stampa tramite iframe
-async function handlePdfExectution() {
+async function handlePdfExecution() {
   const btn = document.getElementById('generate-pdf');
   if (STATE.isGenerating || !btn) return;
 
-  // UI Loading State
   STATE.isGenerating = true;
   const originalText = btn.innerHTML;
-  btn.innerHTML = 'Preparazione stampa...';
+  btn.innerHTML = STATE.labels.preparing || 'Preparazione stampa...';
   btn.disabled = true;
 
   try {
-    const dataUrl = CONFIG.endpoints.data[STATE.selectedLanguage];
-    const fullData = await fetchData(dataUrl);
-    const now = new Date();
-    const locale = STATE.selectedLanguage === 'it' ? 'it-IT' : 'en-US';
-    const dateString = now.toLocaleDateString(locale, { year: 'numeric', month: '2-digit', day: '2-digit' });
+    const langDef = CONFIG.languages[STATE.selectedLanguage];
+    const fullData = await fetchData(langDef.dataUrl);
+    const dateString = new Date().toLocaleDateString(langDef.locale, {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    });
+    const signature = `${langDef.signaturePrefix} ${dateString}`;
 
-    // Inseriamo la firma se desiderata
-    const signaturePrefix = STATE.selectedLanguage === 'it' ? 'Documento generato il' : 'Document generated on';
-    const signature = `${signaturePrefix} ${dateString}`;
-
-    let templatePath = CONFIG.templates[STATE.selectedStyle];
-
-    // Renderizza la preview "pulita" ma con la firma pronta per la stampa
+    const templatePath = CONFIG.styles[STATE.selectedStyle].templateUrl;
     await renderCVPreview(templatePath, fullData, true, signature);
 
     const element = document.getElementById('cv-preview');
     if (element) {
-      await waitForImagesToLoad(element); // Attendi caricamento immagini nel DOM principale
-
-      // Breve ritardo per assicurare il rendering del DOM
+      await waitForImagesToLoad(element);
       await new Promise(resolve => setTimeout(resolve, 300));
-
-      // Lancia la stampa isolata
       await printElement(element);
     }
   } catch (error) {
-    console.error('Errore durante la preparazione alla stampa:', error);
-    alert('Errore durante la preparazione: ' + error.message);
+    console.error('Print preparation failed:', error);
+    alert((STATE.labels.errorGenerate || 'Errore') + ': ' + error.message);
   } finally {
-    // Ripristino UI
     STATE.isGenerating = false;
     btn.innerHTML = originalText;
     btn.disabled = false;
   }
 }
 
-/**
- * Inizializzazione Event Listeners
- */
-function initialize() {
-  console.log('Inizializzazione generatore PDF...');
+function buildDropdownMenu(menuId, items, activeId, onSelect) {
+  const menu = document.getElementById(menuId);
+  if (!menu) return;
+  menu.innerHTML = '';
+  items.forEach(({ id, label }) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'dropdown-item' + (id === activeId ? ' active' : '');
+    btn.dataset.id = id;
+    btn.textContent = label;
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      onSelect(id);
+    });
+    li.appendChild(btn);
+    menu.appendChild(li);
+  });
+}
 
-  // Leggi parametri URL
+function initialize() {
+  // Read URL params
   const params = new URLSearchParams(window.location.search);
   const langParam = params.get('lang');
   const styleParam = params.get('style');
+  if (langParam && CONFIG.languages[langParam]) STATE.selectedLanguage = langParam;
+  if (styleParam && CONFIG.styles[styleParam]) STATE.selectedStyle = styleParam;
 
-  if (langParam && CONFIG.endpoints.data[langParam]) {
-    STATE.selectedLanguage = langParam;
-  }
-  if (styleParam && CONFIG.templates[styleParam]) {
-    STATE.selectedStyle = styleParam;
-  }
+  // Build dropdowns from CONFIG
+  buildDropdownMenu(
+    'languageDropdown-menu',
+    Object.entries(CONFIG.languages).map(([id, l]) => ({ id, label: `${l.flag} ${l.label}` })),
+    STATE.selectedLanguage,
+    handleLanguageChange
+  );
+  buildDropdownMenu(
+    'previewDropdown-menu',
+    Object.entries(CONFIG.styles).map(([id, s]) => ({ id, label: s.label })),
+    STATE.selectedStyle,
+    handlePreviewChange
+  );
 
-  // Imposta label iniziale lingua
-  const langLabelBtn = document.getElementById('languageDropdown');
-  if (langLabelBtn) {
-    const flag = STATE.selectedLanguage === 'it' ? '🇮🇹' : '🇬🇧';
-    const langName = STATE.selectedLanguage === 'it' ? 'Italiano' : 'English';
-    langLabelBtn.textContent = `${flag} Lingua: ${langName}`;
-  }
-
-  // Imposta label iniziale stile
-  const styleLabelBtn = document.getElementById('previewDropdown');
-  if (styleLabelBtn) {
-    const styleName = CONFIG.styleNames[STATE.selectedStyle] || STATE.selectedStyle;
-    styleLabelBtn.textContent = `Stile: ${styleName}`;
-  }
-
-  // Imposta stato attivo iniziale per la lingua
-  document.querySelectorAll('[id^="lang-"]').forEach(el => {
-    el.classList.toggle('active', el.id === `lang-${STATE.selectedLanguage}`);
-  });
-
-  // Listener per i bottoni di preview
-  const previewButtons = {
-    'show-europass-preview': 'europass',
-    'show-europass-no-logo-preview': 'europass-no-logo',
-    'show-custom-preview': 'custom'
-  };
-
-  Object.entries(previewButtons).forEach(([id, style]) => {
-    const btn = document.getElementById(id);
-    if (btn) {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handlePreviewChange(style);
-        return false;
-      });
-    }
-  });
-
-  // Listener per i bottoni di lingua
-  const languageButtons = {
-    'lang-it': 'it',
-    'lang-en': 'en'
-  };
-
-  Object.entries(languageButtons).forEach(([id, lang]) => {
-    const btn = document.getElementById(id);
-    if (btn) {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        handleLanguageChange(lang);
-        return false;
-      });
-    }
-  });
-
-  // Listener generazione PDF principale
   const generateBtn = document.getElementById('generate-pdf');
   if (generateBtn) {
-    generateBtn.addEventListener('click', (e) => {
+    generateBtn.addEventListener('click', e => {
       e.preventDefault();
-      handlePdfExectution();
+      handlePdfExecution();
     });
   }
 
-  // Listener PDF semplice (test)
-  const btnSimple = document.getElementById('generate-pdf-simple');
-  if (btnSimple) {
-    btnSimple.addEventListener('click', (e) => {
-      e.preventDefault();
-      const doc = new window.jspdf.jsPDF();
-      doc.setFontSize(22);
-      doc.text('PDF di esempio', 20, 30);
-      doc.setFontSize(14);
-      doc.text('Questo è un PDF generato come test.', 20, 50);
-      doc.save('esempio-semplice.pdf');
-    });
-  }
-
-  // Trigger preview iniziale
   handlePreviewChange(STATE.selectedStyle).then(() => {
-    // Forza lo scroll all'ancora se presente dopo il primo rendering
     if (window.location.hash) {
-      const hash = window.location.hash;
-      setTimeout(() => {
-        const target = document.querySelector(hash);
-        if (target) {
-          console.log(`Scrolling to ${hash}...`);
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 300);
+      const target = document.querySelector(window.location.hash);
+      if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 300);
     }
   });
 }
 
-// Avvia inizializzazione se il DOM è pronto o attendi
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initialize);
 } else {

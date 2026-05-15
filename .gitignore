@@ -1,3 +1,7 @@
 myhomewebsite/public/
-.DS_Store
 public
+src/public/
+src/resources/
+.DS_Store
+**/.DS_Store
+devcontainer-lock.json
