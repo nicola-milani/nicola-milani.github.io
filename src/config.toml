@@ -55,7 +55,7 @@ link = "https://medium.com/@nicoweb313"
 name = "Medium"
 
 [outputs]
-home = ["HTML", "JSON"]
+home = ["HTML"]
 
 [taxonomies]
 tag = "tags"
