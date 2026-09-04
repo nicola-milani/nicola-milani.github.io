@@ -11,6 +11,7 @@ relativeURLs = true
 
 [params]
 address = "Verona, IT"
+courtesyMessage = "Sito in aggiornamento"
 email = "info@nicolamilani.it"
 favicon = "img/favicon.ico"
 firstName = "Nicola"

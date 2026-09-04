@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}</title>
+  {{ with .Site.Params.favicon }}<link rel="icon" href="{{ . | relURL }}">{{ end }}
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background: #fff;
+      color: #1a1a1a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      box-sizing: border-box;
+    }
+    .name {
+      font-size: clamp(1rem, 3vw, 1.375rem);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      margin: 0;
+    }
+    .clock {
+      font-size: clamp(3rem, 16vw, 8rem);
+      font-weight: 200;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+      line-height: 1.1;
+      margin: 0.4em 0;
+    }
+    .message {
+      font-size: clamp(0.875rem, 2.5vw, 1.0625rem);
+      color: #777;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <p class="name">{{ .Site.Params.firstName }} {{ .Site.Params.lastName }}</p>
+  <p class="clock" id="clock">--:--:--</p>
+  {{ with .Site.Params.courtesyMessage }}<p class="message">{{ . }}</p>{{ end }}
+
+  <script>
+    (function () {
+      var el = document.getElementById("clock");
+      function tick() {
+        el.textContent = new Date().toLocaleTimeString("it-IT", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit"
+        });
+      }
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+</body>
+</html>
